@@ -354,6 +354,66 @@
 
 .harvard-ul li { margin-bottom:2px;line-height:1.3; }
 
+.cv-template { width:210mm;min-height:297mm;background:#fff;box-sizing:border-box; }
+
+.europass-doc { width:210mm;min-height:297mm;background:#fff;padding:14mm 16mm;font-family:Arial,sans-serif;font-size:11pt;color:#333; }
+
+.europass-header { display:flex;justify-content:space-between;align-items:center;margin-bottom:14px; }
+
+.europass-name { font-size:28px;font-weight:700;color:#555; }
+
+.europass-logo { font-size:28px;font-weight:700;color:#6d3ca7; }
+
+.europass-divider { border-top:2px solid #a9a9a9;margin-bottom:16px; }
+
+.europass-contact { display:flex;flex-wrap:wrap;gap:12px;font-size:11pt;margin-bottom:22px; }
+
+.europass-section { margin-bottom:20px; }
+
+.europass-title { font-size:18px;font-weight:700;border-bottom:2px solid #a9a9a9;padding-bottom:4px;margin-bottom:14px; }
+
+.europass-block { margin-bottom:18px; }
+
+.europass-date { font-size:12pt;color:#666;margin-bottom:4px; }
+
+.europass-position { font-size:16px;font-weight:700;border-bottom:1px solid #aaa;padding-bottom:4px;margin-bottom:10px; }
+
+.europass-position span { font-weight:400; }
+
+.europass-ul { margin:0 0 0 22px;padding:0; }
+
+.europass-ul li { margin-bottom:4px; }
+
+.europass-text { line-height:1.6; }
+
+.europass-eqf { margin-top:8px; }
+
+.europass-table { width:100%;border-collapse:collapse;margin-top:10px; }
+
+.europass-table th { border-bottom:2px solid #ccc;padding:8px;text-align:center; }
+
+.europass-table td { border-bottom:1px solid #ddd;padding:8px;text-align:center; }
+
+.europass-table td:first-child { text-align:left; }
+
+.europass-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.europass-logo img {
+  width: 100px;
+  height: auto;
+}
+
+.europass-logo span {
+  color: #4B0082; /* morado */
+  font-weight: bold;
+  font-size: 1.25rem;
+  text-transform: lowercase;
+}
+
 
   @keyframes slideUp { from { transform: translateY(16px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
@@ -392,22 +452,50 @@ const { useState, useCallback, useRef, useEffect } = React;
 
 // ── DEFAULT EMPTY STATE ──
 const EMPTY_CV = {
-  personal: { name: '', role: '', email: '', phone: '', location: '', linkedin: '', github: '', portfolio: '' },
-  summary: '',
-  skills: [],
-  experience: [],
-  projects: [],
-  education: { degree: '', school: '', location: '' },
-  certifications: [],
-  languages: [],
-  softSkills: [],
-  template:'standard'
-};
 
+  template:'standard',
+
+  personal:{
+    name:'',
+    role:'',
+    email:'',
+    phone:'',
+    location:'',
+    address:'',
+    dateOfBirth:'',
+    nationality:'',
+    gender:'',
+    linkedin:'',
+    github:'',
+    portfolio:''
+  },
+
+  summary:'',
+
+  skills:[],
+
+  experience:[],
+
+  projects:[],
+
+  education:{
+    degree:'',
+    school:'',
+    location:'',
+    graduation:'',
+    eqf:''
+  },
+
+  certifications:[],
+
+  languages:[],
+
+  softSkills:[]
+}
 // ── SAMPLE DATA (Andres' CV) ──
 const SAMPLE_CV = {
   template:'standard',
-  personal: { name: 'Andres Escala', role: 'Full Stack Developer', email: 'andres.escala.344@gmail.com', phone: '+52 5545464585', location: 'Mexico City, Mexico', linkedin: 'linkedin.com/in/escalandres', github: 'github.com/escalandres', portfolio: 'escalandres-portfolio.vercel.app' },
+  personal: { name: 'Andres Escala', role: 'Full Stack Developer', email: 'andres.escala.344@gmail.com', phone: '+52 5545464585', location: 'Mexico City, Mexico', linkedin: 'linkedin.com/in/escalandres', github: 'github.com/escalandres', portfolio: 'escalandres-portfolio.vercel.app', dateOfBirth:'', nationality:'', gender:'', address:'', },
   summary: 'Full Stack Developer with 3+ years of experience building scalable web applications and RESTful APIs using .NET, Node.js, and Express.js. Skilled in React.js, TypeScript, SQL Server, and MongoDB. Hands-on experience customizing Oracle NetSuite ERP via SuiteScript 2.0 and building SOAP/REST integrations. Holds 5 active certifications in Oracle Cloud and Microsoft Azure. Fluent in English (B2) and Spanish (native).',
   skills: ['HTML5, CSS3, JavaScript (ES6+), TypeScript','React.js, Node.js, Express.js, jQuery, EJS','C#, .NET Framework, ASP.NET, .NET Core 6/8','SQL Server, MySQL, MongoDB – query optimization','SuiteScript 2.0: Suitelet, RESTlet, Map/Reduce, Workflow','RESTful APIs, SOAP integrations, Oracle NetSuite ERP','Git, GitHub, Azure, Netlify, GitHub Pages','Linux: Ubuntu, CentOS 7 – server administration'],
   experience: [
@@ -418,7 +506,7 @@ const SAMPLE_CV = {
     { id: 1, title: 'PLD_WEB – Anti-Money Laundering Platform', tech: 'ASP.NET Framework · Bootstrap 4 · SQL Server', startDate: 'Nov 2022', endDate: 'Nov 2023', bullets: ['Web app for detecting and preventing money laundering in microfinance companies.'] },
     { id: 2, title: 'CONDUSEF Management – Regulatory Complaints Platform', tech: 'ASP.NET · SQL Server', startDate: 'Dec 2023', endDate: 'Jul 2024', bullets: ['Streamlined upload of complaints and clarifications to the CONDUSEF financial regulatory entity.'] }
   ],
-  education: { degree: 'Bachelor of Telematics Engineering', school: 'Instituto Politécnico Nacional (IPN)', location: 'Mexico City, Mexico' },
+  education: { degree: 'Bachelor of Telematics Engineering', school: 'Instituto Politécnico Nacional (IPN)', location: 'Mexico City, Mexico', eqf:'', },
   certifications: [
     { id: 1, name: 'Oracle Cloud Infrastructure 2025 Certified Generative AI Professional', date: 'Jan 2026' },
     { id: 2, name: 'Oracle NetSuite SuiteFoundation Specialist', date: 'Dec 2025' },
@@ -459,7 +547,11 @@ const LANGUAGE_LEVELS = [
 
 const CV_TEMPLATES = [
   {value:'standard',label:'Standard'},
-  {value:'harvard',label:'Harvard'}
+  {value:'harvard',label:'Harvard'},
+  {value:'europass',label:'Europass'},
+  // {value:'modern',label:'Modern ATS'},
+  // {value:'minimal',label:'Minimal'},
+  // {value:'academic',label:'Academic'}
 ];
 
 let nextId = 100;
@@ -696,90 +788,120 @@ function BottomSection({ languages, softSkills }) {
 }
 
 // ── CV PREVIEW ──
+const TEMPLATE_COMPONENTS = {
+  standard:StandardCV,
+  harvard:HarvardCV,
+  europass:EuropassCV
+};
+
+function TemplateRenderer({ cv }) {
+
+  const templates = {
+    standard:StandardCV,
+    harvard:HarvardCV,
+    europass:EuropassCV
+  };
+
+  const SelectedTemplate = templates[cv.template] || StandardCV;
+
+  return <SelectedTemplate cv={cv} />;
+
+}
+
+// function CVPreview({ cv }) {
+
+//   if (cv.template === 'harvard') {
+
+//     return (
+//       <HarvardCV cv={cv} />
+//     );
+
+//   }
+
+//   const {
+//     personal,
+//     summary,
+//     skills,
+//     experience,
+//     projects,
+//     education,
+//     certifications,
+//     languages,
+//     softSkills
+//   } = cv;
+
+//   const page1 = [];
+//   const page2 = [];
+
+//   page1.push('header');
+
+//   if (summary) page1.push('summary');
+//   if (skills.length) page1.push('skills');
+//   if (experience.length) page1.push('experience');
+
+//   if (projects.length <= 2) {
+//     page1.push('projects');
+//   } else {
+//     page2.push('projects');
+//   }
+
+//   if (education.degree || education.school) page2.push('education');
+//   if (certifications.length) page2.push('certifications');
+//   if (languages.length || softSkills.length) page2.push('bottom');
+
+//   return (
+//     <div className="cv-pages">
+
+//       <div className="cv-doc">
+//         <HeaderSection personal={personal} />
+
+//         {summary && <SummarySection summary={summary} />}
+
+//         {skills.length > 0 && <SkillsSection skills={skills} />}
+
+//         {experience.length > 0 && (
+//           <ExperienceSection experience={experience} />
+//         )}
+
+//         {projects.length > 0 && projects.length <= 2 && (
+//           <ProjectsSection projects={projects} />
+//         )}
+//       </div>
+
+//       {(page2.length > 0 || projects.length > 2) && (
+//         <div className="cv-doc">
+
+//           {projects.length > 2 && (
+//             <ProjectsSection projects={projects} />
+//           )}
+
+//           {(education.degree || education.school) && (
+//             <EducationSection education={education} />
+//           )}
+
+//           {certifications.length > 0 && (
+//             <CertificationsSection certifications={certifications} />
+//           )}
+
+//           {(languages.length > 0 || softSkills.length > 0) && (
+//             <BottomSection
+//               languages={languages}
+//               softSkills={softSkills}
+//             />
+//           )}
+//         </div>
+//       )}
+//     </div>
+//   );
+
+// }
+
 function CVPreview({ cv }) {
 
-  if (cv.template === 'harvard') {
-
-    return (
-      <HarvardCV cv={cv} />
-    );
-
-  }
-
-  const {
-    personal,
-    summary,
-    skills,
-    experience,
-    projects,
-    education,
-    certifications,
-    languages,
-    softSkills
-  } = cv;
-
-  const page1 = [];
-  const page2 = [];
-
-  page1.push('header');
-
-  if (summary) page1.push('summary');
-  if (skills.length) page1.push('skills');
-  if (experience.length) page1.push('experience');
-
-  if (projects.length <= 2) {
-    page1.push('projects');
-  } else {
-    page2.push('projects');
-  }
-
-  if (education.degree || education.school) page2.push('education');
-  if (certifications.length) page2.push('certifications');
-  if (languages.length || softSkills.length) page2.push('bottom');
-
   return (
-    <div className="cv-pages">
 
-      <div className="cv-doc">
-        <HeaderSection personal={personal} />
+    <TemplateRenderer cv={cv} />
 
-        {summary && <SummarySection summary={summary} />}
-
-        {skills.length > 0 && <SkillsSection skills={skills} />}
-
-        {experience.length > 0 && (
-          <ExperienceSection experience={experience} />
-        )}
-
-        {projects.length > 0 && projects.length <= 2 && (
-          <ProjectsSection projects={projects} />
-        )}
-      </div>
-
-      {(page2.length > 0 || projects.length > 2) && (
-        <div className="cv-doc">
-
-          {projects.length > 2 && (
-            <ProjectsSection projects={projects} />
-          )}
-
-          {(education.degree || education.school) && (
-            <EducationSection education={education} />
-          )}
-
-          {certifications.length > 0 && (
-            <CertificationsSection certifications={certifications} />
-          )}
-
-          {(languages.length > 0 || softSkills.length > 0) && (
-            <BottomSection
-              languages={languages}
-              softSkills={softSkills}
-            />
-          )}
-        </div>
-      )}
-    </div>
   );
 
 }
@@ -797,7 +919,7 @@ function HarvardCV({ cv }) {
   } = cv;
 
   return (
-    <div className="cv-doc harvard-doc">
+    <div className="cv-doc cv-template harvard-doc">
       <div className="harvard-name">
         {personal.name || 'Your Name'}
       </div>
@@ -943,6 +1065,340 @@ function HarvardCV({ cv }) {
   );
 }
 
+function EuropassCV({ cv }) {
+
+  const { personal,skills,experience,education,languages,softSkills } = cv;
+
+  return (
+
+    <div className="cv-doc europass-doc">
+
+      <div className="europass-header">
+
+        <div className="europass-name">
+
+          {personal.name || 'Your Name'}
+
+        </div>
+
+        <div class="europass-logo">
+          <img src="./europass-logo.webp" alt="Europass Logo" />
+          <span>europass</span>
+        </div>
+
+
+
+      </div>
+
+      <div className="europass-divider"></div>
+
+      <div className="europass-contact">
+
+        {personal.dateOfBirth && (
+          <span><strong>Date of birth:</strong> {personal.dateOfBirth}</span>
+        )}
+
+        {personal.nationality && (
+          <span><strong>Nationality:</strong> {personal.nationality}</span>
+        )}
+
+        {personal.gender && (
+          <span><strong>Gender:</strong> {personal.gender}</span>
+        )}
+
+        {personal.phone && (
+          <span><strong>Phone:</strong> {personal.phone}</span>
+        )}
+
+        {personal.email && (
+          <span><strong>Email:</strong> {personal.email}</span>
+        )}
+
+        {personal.address && (
+          <span><strong>Address:</strong> {personal.address}</span>
+        )}
+
+      </div>
+
+      {experience.length > 0 && (
+
+        <div className="europass-section">
+
+          <div className="europass-title">
+
+            ● WORK EXPERIENCE
+
+          </div>
+
+          {experience.map(job => (
+
+            <div key={job.id} className="europass-block">
+
+              <div className="europass-date">
+
+                {[job.startDate,job.endDate]
+                  .filter(Boolean)
+                  .join(' – ')}
+
+                {' '}
+
+                {job.location}
+
+              </div>
+
+              <div className="europass-position">
+
+                {job.title.toUpperCase()}
+
+                {' '}
+
+                <span>
+
+                  {job.company}
+
+                </span>
+
+              </div>
+
+              <ul className="europass-ul">
+
+                {job.bullets
+                  .filter(Boolean)
+                  .map((b,i) => (
+                    <li key={i}>{b}</li>
+                  ))}
+
+              </ul>
+
+            </div>
+
+          ))}
+
+        </div>
+
+      )}
+
+      {(education.degree || education.school) && (
+
+        <div className="europass-section">
+
+          <div className="europass-title">
+
+            ● EDUCATION AND TRAINING
+
+          </div>
+
+          <div className="europass-block">
+
+            <div className="europass-date">
+
+              {education.graduation}
+
+            </div>
+
+            <div className="europass-position">
+
+              {education.degree.toUpperCase()}
+
+              {' '}
+
+              <span>
+
+                {education.school}
+
+              </span>
+
+            </div>
+
+            {education.eqf && (
+
+              <div className="europass-eqf">
+
+                <strong>
+
+                  Level in EQF
+
+                </strong>
+
+                {' '}
+
+                {education.eqf}
+
+              </div>
+
+            )}
+
+          </div>
+
+        </div>
+
+      )}
+
+      {skills.length > 0 && (
+
+        <div className="europass-section">
+
+          <div className="europass-title">
+
+            ● DIGITAL SKILLS
+
+          </div>
+
+          <div className="europass-text">
+
+            {skills.join(' | ')}
+
+          </div>
+
+        </div>
+
+      )}
+
+      {softSkills.length > 0 && (
+
+        <div className="europass-section">
+
+          <div className="europass-title">
+
+            ● COMMUNICATION AND INTERPERSONAL SKILLS
+
+          </div>
+
+          <div className="europass-text">
+
+            {softSkills.join(', ')}
+
+          </div>
+
+        </div>
+
+      )}
+
+      {languages.length > 0 && (
+
+        <div className="europass-section">
+
+          <div className="europass-title">
+
+            ● LANGUAGE SKILLS
+
+          </div>
+
+          <table className="europass-table">
+
+            <thead>
+
+              <tr>
+
+                <th>Language</th>
+
+                <th>Listening</th>
+
+                <th>Reading</th>
+
+                <th>Speaking</th>
+
+                <th>Writing</th>
+
+              </tr>
+
+            </thead>
+
+            <tbody>
+
+              {languages.map(lang => (
+
+                <tr key={lang.id}>
+
+                  <td>
+
+                    <strong>
+
+                      {lang.name.toUpperCase()}
+
+                    </strong>
+
+                  </td>
+
+                  <td>{lang.level}</td>
+
+                  <td>{lang.level}</td>
+
+                  <td>{lang.level}</td>
+
+                  <td>{lang.level}</td>
+
+                </tr>
+
+              ))}
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      )}
+
+    </div>
+
+  );
+
+}
+
+function StandardCV({ cv }) {
+
+  return (
+
+    <div className="cv-pages cv-template">
+
+      <div className="cv-doc">
+
+        <HeaderSection personal={cv.personal} />
+
+        {cv.summary && (
+          <SummarySection summary={cv.summary} />
+        )}
+
+        {cv.skills.length > 0 && (
+          <SkillsSection skills={cv.skills} />
+        )}
+
+        {cv.experience.length > 0 && (
+          <ExperienceSection experience={cv.experience} />
+        )}
+
+      </div>
+
+      <div className="cv-doc">
+
+        {cv.projects.length > 0 && (
+          <ProjectsSection projects={cv.projects} />
+        )}
+
+        {(cv.education.degree || cv.education.school) && (
+          <EducationSection education={cv.education} />
+        )}
+
+        {cv.certifications.length > 0 && (
+          <CertificationsSection certifications={cv.certifications} />
+        )}
+
+        {(cv.languages.length > 0 || cv.softSkills.length > 0) && (
+          <BottomSection
+            languages={cv.languages}
+            softSkills={cv.softSkills}
+          />
+        )}
+
+      </div>
+
+    </div>
+
+  );
+
+}
+
 // ── MAIN APP ──
 function App() {
   const [cv, setCV] = useState(EMPTY_CV);
@@ -1080,6 +1536,7 @@ function App() {
         <div className="editor-panel" style={{ display: activeTab === 'editor' ? 'flex' : 'none' }}>
           <div className="editor-scroll">
 
+            {/* CV Format */}
             <SectionCard icon="📄" title="CV Format">
               <Field label="Template">
                 <select
@@ -1089,12 +1546,14 @@ function App() {
                     template:e.target.value
                   })}
                 >
-                  <option value="standard">
-                    Standard
-                  </option>
-                  <option value="harvard">
-                    Harvard
-                  </option>
+                  {CV_TEMPLATES.map(template => (
+                    <option
+                      key={template.value}
+                      value={template.value}
+                    >
+                      {template.label}
+                    </option>
+                  ))}
                 </select>
               </Field>
             </SectionCard>
