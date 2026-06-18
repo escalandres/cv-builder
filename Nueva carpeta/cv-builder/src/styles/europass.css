@@ -1,0 +1,43 @@
+.europass { width:210mm;min-height:297mm;background:#fff;padding:14mm 16mm;box-sizing:border-box;font-family:Arial,sans-serif;color:#333;font-size:11pt; }
+
+.europass-header { display:flex;justify-content:space-between;align-items:center;margin-bottom:12px; }
+
+.europass-header h1 { margin:0;font-size:30px;font-weight:700;color:#555; }
+
+.europass-brand { font-size:34px;font-weight:700;color:#6d3ca7;text-transform:lowercase; }
+
+.europass-divider { border-top:2px solid #a7a7a7;margin-bottom:18px; }
+
+.europass-contact { display:flex;flex-wrap:wrap;gap:12px 18px;font-size:11pt;margin-bottom:26px; }
+
+.europass-contact span::after { content:' |';color:#aaa;margin-left:10px; }
+
+.europass-contact span:last-child::after { display:none; }
+
+.europass-section { margin-bottom:24px; }
+
+.europass-section h2 { margin:0 0 16px;padding-bottom:6px;border-bottom:2px solid #aaa;font-size:18px;font-weight:700;color:#111; }
+
+.europass-job { margin-bottom:24px; }
+
+.europass-job-date { font-size:12pt;color:#666;margin-bottom:6px; }
+
+.europass-job-title { font-size:18px;font-weight:700;border-bottom:1px solid #aaa;padding-bottom:6px;margin-bottom:12px; }
+
+.europass-job-title span { font-weight:400; }
+
+.europass-job ul { margin:0;padding-left:24px; }
+
+.europass-job li { margin-bottom:6px;line-height:1.4; }
+
+.europass-eqf { margin-top:10px; }
+
+.europass-text { line-height:1.8; }
+
+.europass-table { width:100%;border-collapse:collapse;margin-top:10px; }
+
+.europass-table th { padding:10px;border-bottom:2px solid #ccc;text-align:center;font-size:14px; }
+
+.europass-table td { padding:10px;border-bottom:1px solid #ddd;text-align:center; }
+
+.europass-table td:first-child { text-align:left; }

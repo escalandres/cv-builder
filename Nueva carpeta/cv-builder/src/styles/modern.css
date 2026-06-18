@@ -1,0 +1,63 @@
+.moderncv { width:210mm;min-height:297mm;background:#fff;padding:18mm 16mm;box-sizing:border-box;font-family:Arial,sans-serif;color:#5a5a5a; }
+
+.moderncv-header { margin-bottom:28px; }
+
+.moderncv-header h1 { margin:0;font-size:44px;font-weight:300;color:#7486b6;text-transform:uppercase; }
+
+.moderncv-header h2 { margin:6px 0 18px;font-size:18px;font-weight:400;color:#9bbef5; }
+
+.moderncv-contact { display:flex;flex-wrap:wrap;gap:24px;font-size:14px;color:#888; }
+
+.moderncv-body { display:grid;grid-template-columns:30% 70%;gap:40px; }
+
+.moderncv-left { display:flex;flex-direction:column;gap:28px; }
+
+.moderncv-right { display:flex;flex-direction:column;gap:28px; }
+
+.moderncv-left section { display:flex;flex-direction:column;gap:16px; }
+
+.moderncv-right section { display:flex;flex-direction:column;gap:16px; }
+
+.moderncv-left h3 { margin:0;padding-bottom:8px;border-bottom:2px solid #b6b6b6;font-size:13px;font-weight:500;color:#555; }
+
+.moderncv-right h3 { margin:0;padding-bottom:8px;border-bottom:2px solid #b6b6b6;font-size:13px;font-weight:500;color:#555; }
+
+.moderncv-card { display:flex;gap:16px;align-items:flex-start; }
+
+.moderncv-icon { width:44px;height:44px;border-radius:50%;background:#efefef;display:flex;align-items:center;justify-content:center;color:#5ca2ff;font-size:18px;flex-shrink:0; }
+
+.moderncv-card p { margin:4px 0 0;line-height:1.4; }
+
+.moderncv-tags { display:flex;flex-wrap:wrap;gap:10px; }
+
+.moderncv-tags span { padding:6px 12px;border-bottom:1px solid #9aa7bf;color:#7486b6; }
+
+.moderncv-item strong { display:block;color:#9bbef5; }
+
+.moderncv-item p { margin:4px 0 0; }
+
+.moderncv-job { display:flex;flex-direction:column;gap:10px; }
+
+.moderncv-job-header { display:flex;justify-content:space-between;gap:24px; }
+
+.moderncv-job h4 { margin:0;font-size:22px;font-weight:400;color:#7486b6; }
+
+.moderncv-job span { color:#9bbef5; }
+
+.moderncv-job-meta { display:flex;gap:20px;align-items:center;font-size:14px;color:#888; }
+
+.moderncv-job ul { margin:0;padding-left:18px; }
+
+.moderncv-job li { margin-bottom:6px; }
+
+.moderncv-education h4 { margin:0;font-size:22px;font-weight:400;color:#7486b6; }
+
+.moderncv-education span { color:#9bbef5; }
+
+.moderncv-languages { display:grid;grid-template-columns:1fr 1fr;gap:28px; }
+
+.moderncv-language { display:flex;flex-direction:column;gap:6px; }
+
+.moderncv-bar { width:100%;height:8px;background:#e5e5e5;border-radius:8px;overflow:hidden; }
+
+.moderncv-fill { width:85%;height:100%;background:#1d47a8;border-radius:8px; }
