@@ -1,31 +1,71 @@
+import '../styles/ui.css';
+
 interface Props {
-  bullets:  string[];
+  bullets: string[];
   onChange: (bullets: string[]) => void;
 }
 
-export default function BulletEditor({ bullets, onChange }: Props) {
-  const update = (i: number, val: string) => {
+export default function BulletEditor({
+  bullets,
+  onChange,
+}: Props) {
+
+  const update = (
+    index:number,
+    value:string
+  ) => {
     const next = [...bullets];
-    next[i] = val;
+    next[index] = value;
     onChange(next);
   };
 
-  const add    = () => onChange([...bullets, '']);
-  const remove = (i: number) => onChange(bullets.filter((_, j) => j !== i));
+  const add = () => {
+    onChange([
+      ...bullets,
+      ''
+    ]);
+  };
+
+  const remove = (index:number) => {
+    onChange(
+      bullets.filter((_,i) => i !== index)
+    );
+  };
 
   return (
     <div className="bullet-list">
-      {bullets.map((b, i) => (
-        <div key={i} className="bullet-row">
+      {bullets.map((bullet,index)=>(
+        <div
+          key={index}
+          className="bullet-row"
+        >
           <input
-            value={b}
-            onChange={e => update(i, e.target.value)}
+            value={bullet}
+            onChange={e =>
+              update(
+                index,
+                e.target.value
+              )
+            }
             placeholder="Describe an achievement or responsibility..."
           />
-          <button className="btn-icon" onClick={() => remove(i)} title="Remove">✕</button>
+          <button
+            type="button"
+            className="btn-icon"
+            title="Remove"
+            onClick={() => remove(index)}
+          >
+            ✕
+          </button>
         </div>
       ))}
-      <button className="btn-add" onClick={add}>＋ Add bullet</button>
+      <button
+        type="button"
+        className="btn-add"
+        onClick={add}
+      >
+        ＋ Add bullet
+      </button>
     </div>
   );
 }

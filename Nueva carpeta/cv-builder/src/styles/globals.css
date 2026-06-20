@@ -1,0 +1,20 @@
+/* Multi-page template wrapper (Harvard, Europass) */
+.cv-pages {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media print {
+  .cv-pages {
+    gap: 0;
+  }
+
+  .cv-pages .cv-doc {
+    page-break-after: always;
+  }
+
+  .cv-pages .cv-doc:last-child {
+    page-break-after: auto;
+  }
+}

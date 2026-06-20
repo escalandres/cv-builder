@@ -1,8 +1,9 @@
 import '../styles/europass.css';
 
-import type { CV } from '../data/cv.model';
+import type { CV } from '../types/cv.types';
 
 import HeaderSection from '../editor/HeaderSection';
+import SummarySection from '../editor/SummarySection';
 import ExperienceSection from '../editor/ExperienceSection';
 import EducationSection from '../editor/EducationSection';
 import SkillsSection from '../editor/SkillsSection';
@@ -29,16 +30,27 @@ export default function EuropassCV({ cv }: Props) {
 
       {/* ── Página 1 ── */}
 
-      <div className="cv-doc">
+      <div className="cv-doc europass">
 
         <HeaderSection
           personal={cv.personal}
+          variant="europass"
         />
+
+        {cv.summary && (
+
+          <SummarySection
+            summary={cv.summary}
+            variant="europass"
+          />
+
+        )}
 
         {cv.experience.length > 0 && (
 
           <ExperienceSection
             experience={cv.experience}
+            variant="europass"
           />
 
         )}
@@ -47,12 +59,13 @@ export default function EuropassCV({ cv }: Props) {
 
       {/* ── Página 2 ── */}
 
-      <div className="cv-doc">
+      <div className="cv-doc europass">
 
         {hasEducation && (
 
           <EducationSection
             education={cv.education}
+            variant="europass"
           />
 
         )}
@@ -61,6 +74,7 @@ export default function EuropassCV({ cv }: Props) {
 
           <SkillsSection
             skills={cv.skills}
+            variant="europass"
           />
 
         )}
@@ -70,6 +84,7 @@ export default function EuropassCV({ cv }: Props) {
           <BottomSection
             languages={cv.languages}
             softSkills={cv.softSkills}
+            variant="europass"
           />
 
         )}

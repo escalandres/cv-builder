@@ -1,6 +1,6 @@
 import '../styles/harvard.css';
 
-import type { CV } from '../data/cv.model';
+import type { CV } from '../types/cv.types';
 
 import HeaderSection from '../editor/HeaderSection';
 import SummarySection from '../editor/SummarySection';
@@ -31,16 +31,18 @@ export default function HarvardCV({ cv }: Props) {
 
       {/* ── Página 1 ── */}
 
-      <div className="cv-doc">
+      <div className="cv-doc harvardcv">
 
         <HeaderSection
           personal={cv.personal}
+          variant="harvard"
         />
 
         {cv.summary && (
 
           <SummarySection
             summary={cv.summary}
+            variant="harvard"
           />
 
         )}
@@ -49,6 +51,7 @@ export default function HarvardCV({ cv }: Props) {
 
           <EducationSection
             education={cv.education}
+            variant="harvard"
           />
 
         )}
@@ -57,6 +60,7 @@ export default function HarvardCV({ cv }: Props) {
 
           <ExperienceSection
             experience={cv.experience}
+            variant="harvard"
           />
 
         )}
@@ -65,12 +69,13 @@ export default function HarvardCV({ cv }: Props) {
 
       {/* ── Página 2 ── */}
 
-      <div className="cv-doc">
+      <div className="cv-doc harvardcv">
 
         {cv.skills.length > 0 && (
 
           <SkillsSection
             skills={cv.skills}
+            variant="harvard"
           />
 
         )}
@@ -79,6 +84,7 @@ export default function HarvardCV({ cv }: Props) {
 
           <CertificationsSection
             certifications={cv.certifications}
+            variant="harvard"
           />
 
         )}
@@ -88,6 +94,7 @@ export default function HarvardCV({ cv }: Props) {
           <BottomSection
             languages={cv.languages}
             softSkills={cv.softSkills}
+            variant="harvard"
           />
 
         )}

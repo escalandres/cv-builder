@@ -1,0 +1,35 @@
+.editor-panel { width:440px;min-width:440px;height:100%;background:#fff;border-right:1px solid #e5e7eb;display:flex;flex-direction:column;overflow:hidden; }
+
+.editor-scroll { flex:1;overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:20px; }
+
+.editor-scroll::-webkit-scrollbar { width:10px; }
+
+.editor-scroll::-webkit-scrollbar-track { background:#f3f4f6; }
+
+.editor-scroll::-webkit-scrollbar-thumb { background:#cbd5e1;border-radius:999px; }
+
+.editor-scroll::-webkit-scrollbar-thumb:hover { background:#94a3b8; }
+
+.editor-panel input,.editor-panel select,.editor-panel textarea { width:100%; }
+
+.editor-panel textarea { min-height:120px;resize:vertical; }
+
+.editor-panel .section-card { flex-shrink:0;overflow:hidden; }
+
+.editor-panel .section-body > .btn-add:last-child { margin-top:16px; }
+
+.editor-panel .list-item + .list-item { margin-top:16px; }
+
+.editor-panel .field + .field { margin-top:16px; }
+
+.editor-panel .field-row > .field + .field { margin-top:0; }
+
+.editor-panel .field-row + .field-row { margin-top:16px; }
+
+@media (max-width:1400px) { .editor-panel { width:400px;min-width:400px; } }
+
+@media (max-width:1200px) { .editor-panel { width:360px;min-width:360px; } }
+
+@media (max-width:900px) { .editor-panel { width:100%;min-width:100%;border-right:none;border-bottom:1px solid #e5e7eb; } }
+
+@media print { .editor-panel { display:none !important; } }

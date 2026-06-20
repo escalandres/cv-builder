@@ -1,0 +1,27 @@
+.toast { position:fixed;right:24px;bottom:24px;z-index:1100;min-width:280px;max-width:420px;padding:14px 18px;border-radius:14px;background:#111827;color:#fff;display:flex;align-items:center;gap:14px;box-shadow:0 12px 30px rgba(0,0,0,.2);animation:toast-in .25s ease; }
+
+.toast-icon { width:28px;height:28px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px; }
+
+.toast-message { flex:1;font-size:14px;font-weight:500;line-height:1.5;word-break:break-word; }
+
+.toast.success { background:#15803d; }
+
+.toast.error { background:#b91c1c; }
+
+.toast.warning { background:#d97706; }
+
+.toast.info { background:#2563eb; }
+
+.toast.download { background:#2563eb; }
+
+.toast.upload { background:#0891b2; }
+
+.toast.sample { background:#7c3aed; }
+
+.toast.delete { background:#dc2626; }
+
+@keyframes toast-in { from { opacity:0;transform:translateY(12px); } to { opacity:1;transform:translateY(0); } }
+
+@media (max-width:700px) { .toast { left:16px;right:16px;bottom:16px;max-width:none;min-width:0; } }
+
+@media print { .toast { display:none !important; } }

@@ -1,4 +1,5 @@
-import type { CV } from '../data/cv.model';
+import type { CV } from '../types/cv.types';
+import '../styles/json.css';
 
 interface Props {
   cv:           CV;
@@ -8,11 +9,25 @@ interface Props {
 
 function syntaxHighlight(json: string): string {
   return json.replace(
-    /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
+    /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\\s*:)?|\\b(true|false|null)\\b|-?\\d+(?:\\.\\d+)?(?:[eE][+-]?\\d+)?)/g,
     match => {
       let cls = 'json-number';
-      if (/^"/.test(match))       cls = /:$/.test(match) ? 'json-key' : 'json-string';
-      else if (/true|false/.test(match)) cls = 'json-bool';
+      if (match.startsWith('"')) {
+        cls = match.endsWith(':')
+          ? 'json-key'
+          : 'json-string';
+      }
+      else if (
+        match === 'true' ||
+        match === 'false'
+      ) {
+        cls = 'json-bool';
+      }
+      else if (
+        match === 'null'
+      ) {
+        cls = 'json-null';
+      }
       return `<span class="${cls}">${match}</span>`;
     },
   );
@@ -24,12 +39,36 @@ export default function JsonPanel({ cv, onExportJSON, onOpenImport }: Props) {
   return (
     <div className="json-panel">
       <div className="json-toolbar">
-        <span>{'{ }'} Live JSON — edit in the Editor panel, export/import with the toolbar buttons</span>
-        <button className="btn btn-ghost btn-sm" onClick={onExportJSON}>📥 Export</button>
-        <button className="btn btn-ghost btn-sm" onClick={onOpenImport}>📤 Import</button>
+        <div className="json-toolbar-left">
+          <div className="json-toolbar-title">
+            {'{ }'} Live JSON
+          </div>
+          <div className="json-toolbar-subtitle">
+            Edit in the Editor panel, export/import with the toolbar buttons
+          </div>
+        </div>
+        <div className="json-toolbar-actions">
+          <button
+            className="btn btn-teal"
+            onClick={onExportJSON}
+          >
+            📥 Export
+          </button>
+          <button
+            className="btn btn-ghost"
+            onClick={onOpenImport}
+          >
+            📤 Import
+          </button>
+        </div>
       </div>
-      <div className="json-scroll">
-        <pre dangerouslySetInnerHTML={{ __html: syntaxHighlight(jsonStr) }} />
+      <div className="json-container">
+        <pre
+          className="json-content"
+          dangerouslySetInnerHTML={{
+            __html: syntaxHighlight(jsonStr)
+          }}
+        />
       </div>
     </div>
   );

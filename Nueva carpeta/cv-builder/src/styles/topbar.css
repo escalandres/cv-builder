@@ -1,0 +1,36 @@
+.topbar { height:72px;background:#0f1f3d;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;padding:0 24px;gap:24px;flex-shrink:0; }
+
+.topbar-brand { font-size:24px;font-weight:700;color:#111827;white-space:nowrap; }
+
+.topbar-logo { color: #fff; font-weight: 700; font-size: 15px; letter-spacing: -0.3px; display: flex; align-items: center; gap: 8px; }
+
+.topbar-tabs { display:flex;align-items:center;gap:8px; }
+
+.topbar-spacer { flex:1; }
+
+.topbar-actions { display:flex;align-items:center;gap:12px;flex-wrap:wrap; }
+
+.tab-btn {
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: inherit;
+    transition: all .15s;
+}
+
+.tab-btn:hover:not(.active) {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.tab-btn.active { background:rgba(14,165,233,0.12)
+;color:#0ea5e9; }
+
+@media (max-width:1200px) { .topbar { height:auto;padding:16px;flex-wrap:wrap;align-items:flex-start; } .topbar-spacer { display:none; } .topbar-actions { width:100%; } }
+
+@media print { .topbar { display:none !important; } }

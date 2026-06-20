@@ -1,8 +1,9 @@
-import type { CV } from '../data/cv.model';
+import type { CV } from '../types/cv.types';
 import { CV_TEMPLATES, LANGUAGES, LANGUAGE_LEVELS } from '../data/constants';
 import Field       from '../ui/Field';
 import SectionCard from '../ui/SectionCard';
 import BulletEditor from '../ui/BulletEditor';
+import '../styles/editor.css';
 
 interface Props {
   cv:               CV;

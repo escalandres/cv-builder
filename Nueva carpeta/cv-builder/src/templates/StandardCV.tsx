@@ -1,5 +1,7 @@
 import '../styles/standard.css';
-import type { CV } from '../data/cv.model';
+
+import type { CV } from '../types/cv.types';
+
 import HeaderSection from '../editor/HeaderSection';
 import SummarySection from '../editor/SummarySection';
 import SkillsSection from '../editor/SkillsSection';
@@ -14,51 +16,84 @@ interface Props {
 }
 
 export default function StandardCV({ cv }: Props) {
-  const hasEducation = Boolean(cv.education.degree || cv.education.school);
-  const hasBottom    = cv.languages.length > 0 || cv.softSkills.length > 0;
+
+  const hasEducation =
+    Boolean(
+      cv.education.degree ||
+      cv.education.school
+    );
+
+  const hasBottom =
+    cv.languages.length > 0 ||
+    cv.softSkills.length > 0;
 
   return (
-    <div className="cv-pages cv-template">
 
-      {/* ── Página 1 ── */}
-      <div className="cv-doc">
-        <HeaderSection personal={cv.personal} />
+    <div className="cv-doc">
 
-        {cv.summary && (
-          <SummarySection summary={cv.summary} />
-        )}
+      <HeaderSection
+        personal={cv.personal}
+      />
 
-        {cv.skills.length > 0 && (
-          <SkillsSection skills={cv.skills} />
-        )}
+      {cv.summary && (
 
-        {cv.experience.length > 0 && (
-          <ExperienceSection experience={cv.experience} />
-        )}
-      </div>
+        <SummarySection
+          summary={cv.summary}
+        />
 
-      {/* ── Página 2 ── */}
-      <div className="cv-doc">
-        {cv.projects.length > 0 && (
-          <ProjectsSection projects={cv.projects} />
-        )}
+      )}
 
-        {hasEducation && (
-          <EducationSection education={cv.education} />
-        )}
+      {cv.skills.length > 0 && (
 
-        {cv.certifications.length > 0 && (
-          <CertificationsSection certifications={cv.certifications} />
-        )}
+        <SkillsSection
+          skills={cv.skills}
+        />
 
-        {hasBottom && (
-          <BottomSection
-            languages={cv.languages}
-            softSkills={cv.softSkills}
-          />
-        )}
-      </div>
+      )}
+
+      {cv.experience.length > 0 && (
+
+        <ExperienceSection
+          experience={cv.experience}
+        />
+
+      )}
+
+      {cv.projects.length > 0 && (
+
+        <ProjectsSection
+          projects={cv.projects}
+        />
+
+      )}
+
+      {hasEducation && (
+
+        <EducationSection
+          education={cv.education}
+        />
+
+      )}
+
+      {cv.certifications.length > 0 && (
+
+        <CertificationsSection
+          certifications={cv.certifications}
+        />
+
+      )}
+
+      {hasBottom && (
+
+        <BottomSection
+          languages={cv.languages}
+          softSkills={cv.softSkills}
+        />
+
+      )}
 
     </div>
+
   );
+
 }

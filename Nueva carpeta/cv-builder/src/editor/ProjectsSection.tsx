@@ -1,4 +1,4 @@
-import type { Project } from '../data/cv.model';
+import type { Project } from '../types/cv.types';
 
 interface Props {
   projects: Project[];

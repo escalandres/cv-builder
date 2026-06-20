@@ -1,8 +1,9 @@
-import type { CV } from '../data/cv.model';
+import type { CV } from '../types/cv.types';
 import TemplateRenderer from '../templates/TemplateRenderer';
+import '../styles/preview-panel.css';
 
 interface Props {
-  cv:CV;
+  cv: CV;
   onExportPDF:() => void;
   toolbarLabel:string;
   fullWidth?:boolean;
@@ -18,7 +19,7 @@ export default function PreviewPanel({
     <div className={`preview-panel ${fullWidth ? 'preview-full' : ''}`}>
       <div className="preview-toolbar">
         <span>{toolbarLabel}</span>
-        <button className="btn btn-teal btn-sm" onClick={onExportPDF}>
+        <button type="button" className="btn btn-teal btn-sm" onClick={onExportPDF}>
           🖨 Export PDF
         </button>
       </div>

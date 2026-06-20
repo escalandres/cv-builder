@@ -1,12 +1,16 @@
-import type { CV } from '../data/cv.model';
-import StandardCV from './StandardCV';
-import HarvardCV  from './HarvardCV';
-import EuropassCV from './EuropassCV';
+import type { ComponentType } from 'react';
+import type { CV, CVTemplate } from '../types/cv.types';
 
-const TEMPLATE_COMPONENTS: Record<string, React.ComponentType<{ cv: CV }>> = {
+import StandardCV from './StandardCV';
+import HarvardCV from './HarvardCV';
+import EuropassCV from './EuropassCV';
+import ModernCV from './ModernCV';
+
+const TEMPLATE_COMPONENTS: Record<CVTemplate, ComponentType<{ cv: CV }>> = {
   standard: StandardCV,
-  harvard:  HarvardCV,
+  harvard: HarvardCV,
   europass: EuropassCV,
+  modern: ModernCV,
 };
 
 interface Props {
@@ -14,6 +18,11 @@ interface Props {
 }
 
 export default function TemplateRenderer({ cv }: Props) {
-  const Template = TEMPLATE_COMPONENTS[cv.template] ?? StandardCV;
+
+  const Template =
+    TEMPLATE_COMPONENTS[cv.template] ??
+    StandardCV;
+
   return <Template cv={cv} />;
+
 }

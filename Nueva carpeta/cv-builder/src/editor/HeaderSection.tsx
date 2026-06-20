@@ -1,10 +1,59 @@
-import type { Personal } from '../data/cv.model';
+import type { Personal } from '../types/cv.types';
+
+export type SectionVariant = 'standard' | 'harvard' | 'europass';
 
 interface Props {
   personal: Personal;
+  variant?: SectionVariant;
 }
 
-export default function HeaderSection({ personal }: Props) {
+export default function HeaderSection({ personal, variant = 'standard' }: Props) {
+  const contacts = [
+    personal.email,
+    personal.phone,
+    personal.location,
+  ].filter(Boolean);
+
+  const links = [
+    personal.linkedin  && { href: `https://${personal.linkedin}`,  label: personal.linkedin },
+    personal.github     && { href: `https://${personal.github}`,    label: personal.github },
+    personal.portfolio  && { href: `https://${personal.portfolio}`, label: personal.portfolio },
+  ].filter(Boolean) as { href: string; label: string }[];
+
+  if (variant === 'harvard') {
+    return (
+      <div className="harvardcv-header">
+        <h1>{personal.name || 'Your Name'}</h1>
+        {personal.role && <div>{personal.role}</div>}
+        <div className="harvardcv-contact">
+          {contacts.map((c, i) => <span key={i}>{c}</span>)}
+          {links.map((l, i) => (
+            <span key={i}><a href={l.href}>{l.label}</a></span>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (variant === 'europass') {
+    return (
+      <>
+        <div className="europass-header">
+          <h1>{personal.name || 'Your Name'}</h1>
+          <span className="europass-brand">europass</span>
+        </div>
+        {personal.role && <div className="europass-text">{personal.role}</div>}
+        <div className="europass-divider" />
+        <div className="europass-contact">
+          {contacts.map((c, i) => <span key={i}>{c}</span>)}
+          {links.map((l, i) => (
+            <span key={i}><a href={l.href}>{l.label}</a></span>
+          ))}
+        </div>
+      </>
+    );
+  }
+
   return (
     <div className="cv-header">
       <div className="cv-name">{personal.name || 'Your Name'}</div>

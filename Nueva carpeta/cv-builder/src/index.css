@@ -1,37 +1,277 @@
-:root { --bg:#f4f6fa;--surface:#ffffff;--surface-alt:#eef2f7;--border:#d9dde6;--text:#1f2937;--text-light:#6b7280;--primary:#2563eb;--shadow:0 4px 20px rgba(0,0,0,.12);--radius:12px;--transition:.2s ease;--font:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; }
+@import './styles/globals.css';
 
-* { margin:0;padding:0;box-sizing:border-box; }
+:root {
 
-html { font-size:16px; }
+  /* Colors */
 
-html,body,#root { width:100%;height:100%; }
+  --bg: #eef2f7;
 
-body { font-family:var(--font);background:var(--bg);color:var(--text);overflow:hidden;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale; }
+  --surface: #ffffff;
 
-button { font:inherit;border:none;outline:none;background:none;cursor:pointer; }
+  --surface-alt: #f8fafc;
 
-input,select,textarea { font:inherit;outline:none;border:1px solid var(--border);border-radius:8px;padding:10px 12px;background:#fff;transition:var(--transition); }
+  --border: #d9dde6;
 
-input:focus,select:focus,textarea:focus { border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.12); }
+  --text: #1f2937;
 
-textarea { resize:vertical;min-height:100px; }
+  --text-light: #6b7280;
 
-a { color:inherit;text-decoration:none; }
+  --muted: #6b7280;
 
-img { max-width:100%;display:block; }
+  --primary: #2563eb;
 
-ul,ol { padding-left:20px; }
+  /* UI */
 
-table { border-collapse:collapse;width:100%; }
+  --radius: 14px;
 
-th,td { padding:8px; }
+  --shadow:
+    0 8px 30px rgba(0, 0, 0, .08);
 
-::-webkit-scrollbar { width:10px;height:10px; }
+  --transition: .2s ease;
 
-::-webkit-scrollbar-track { background:#eef2f7; }
+  --font:
+    'Inter',
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    sans-serif;
+}
 
-::-webkit-scrollbar-thumb { background:#c5cad4;border-radius:999px; }
+/* ── Reset ───────────────────────────────────────────── */
 
-::-webkit-scrollbar-thumb:hover { background:#aeb5c2; }
+* {
 
-@media print { body { background:#fff;overflow:visible; } .topbar,.editor-panel,.json-panel,.preview-toolbar { display:none !important; } .app,.app-main,.preview-panel,.preview-scroll { display:block !important;height:auto !important;overflow:visible !important;padding:0 !important; } .cv-pages { gap:0 !important; } .cv-doc { box-shadow:none !important;margin:0 auto !important;page-break-after:always;break-after:page; } .cv-doc:last-child { page-break-after:auto;break-after:auto; } }
+  margin: 0;
+
+  padding: 0;
+
+  box-sizing: border-box;
+}
+
+html {
+
+  font-size: 16px;
+}
+
+html,
+body,
+#root {
+
+  width: 100%;
+
+  height: 100%;
+}
+
+body {
+
+  font-family: var(--font);
+
+  background: var(--bg);
+
+  color: var(--text);
+
+  overflow: hidden;
+
+  -webkit-font-smoothing: antialiased;
+
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Root App ───────────────────────────────────────── */
+
+.app {
+
+  width: 100%;
+
+  height: 100vh;
+
+  display: flex;
+
+  flex-direction: column;
+
+  overflow: hidden;
+}
+
+.app-main {
+
+  flex: 1;
+
+  min-height: 0;
+
+  display: flex;
+
+  overflow: hidden;
+
+  background: var(--bg);
+}
+
+/* ── Form Controls ─────────────────────────────────── */
+
+button {
+
+  font: inherit;
+
+  border: none;
+
+  outline: none;
+
+  background: none;
+
+  cursor: pointer;
+}
+
+input,
+select,
+textarea {
+
+  width: 100%;
+
+  font: inherit;
+
+  padding: 10px 12px;
+
+  border: 1px solid var(--border);
+
+  border-radius: 10px;
+
+  outline: none;
+
+  background: #fff;
+
+  transition: var(--transition);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+
+  border-color: var(--primary);
+
+  box-shadow:
+    0 0 0 3px rgba(37, 99, 235, .12);
+}
+
+textarea {
+
+  resize: vertical;
+
+  min-height: 100px;
+}
+
+/* ── Generic Elements ──────────────────────────────── */
+
+a {
+
+  color: inherit;
+
+  text-decoration: none;
+}
+
+img {
+
+  max-width: 100%;
+
+  display: block;
+}
+
+ul,
+ol {
+
+  padding-left: 20px;
+}
+
+table {
+
+  width: 100%;
+
+  border-collapse: collapse;
+}
+
+th,
+td {
+
+  padding: 8px;
+}
+
+/* ── Scrollbars ────────────────────────────────────── */
+
+::-webkit-scrollbar {
+
+  width: 10px;
+
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+
+  background: #cbd5e1;
+
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+
+  background: #94a3b8;
+}
+
+/* ── Responsive ───────────────────────────────────── */
+
+@media (max-width: 900px) {
+
+  .app-main {
+
+    flex-direction: column;
+  }
+
+}
+
+/* ── Print ────────────────────────────────────────── */
+
+@media print {
+
+  body {
+
+    background: #fff;
+
+    overflow: visible;
+  }
+
+  .topbar,
+  .editor-panel,
+  .json-panel,
+  .preview-toolbar {
+
+    display: none !important;
+  }
+
+  .app,
+  .app-main,
+  .preview-panel,
+  .preview-scroll {
+
+    display: block !important;
+
+    height: auto !important;
+
+    overflow: visible !important;
+
+    padding: 0 !important;
+  }
+
+  .cv-doc {
+
+    margin: 0 auto !important;
+
+    box-shadow: none !important;
+
+    border-radius: 0 !important;
+  }
+
+}

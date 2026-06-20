@@ -1,65 +1,128 @@
-/* ── CV DOCUMENT BASE ─────────────────────────────────────── */
-.cv-pages { display:flex;flex-direction:column;align-items:center;gap:24px;padding:24px 0; }
-.cv-template { width:210mm;min-height:297mm;background:#fff;box-sizing:border-box; }
-.cv-doc { background:#fff;width:820px;max-width:100%;padding:28px 32px;box-shadow:0 4px 32px rgba(0,0,0,.18);font-family:Arial,Helvetica,sans-serif;font-size:10pt;line-height:1.32;color:#1a1a1a; }
-.cv-doc * { min-width:0; }
+/* ── TEMPLATE ROOT ─────────────────────────────────────────── */
 
-/* ── HEADER ───────────────────────────────────────────────── */
-.cv-header { border-bottom:2px solid #1a3a5c;padding-bottom:10px;margin-bottom:12px; }
-.cv-name { font-size:19pt;font-weight:700;color:#1a3a5c;text-transform:uppercase;letter-spacing:0.5px; }
-.cv-role { font-size:9.5pt;font-weight:600;color:#2e6da4;margin-top:1px;text-transform:uppercase;letter-spacing:1px; }
-.cv-contacts { margin-top:6px;font-size:8.5pt;color:#333;display:flex;flex-wrap:wrap;gap:3px 16px; }
+.standardcv { width:100%;font-family:Arial,Helvetica,sans-serif;font-size:10pt;line-height:1.35;color:#1a1a1a; }
+
+.standardcv * { min-width:0; }
+
+.cv-doc{
+  width:210mm;
+
+  min-height:297mm;
+
+  background:#fff;
+
+  padding:28px 32px;
+
+  box-sizing:border-box;
+
+  box-shadow:
+    0 4px 32px rgba(0,0,0,.18);
+}
+
+/* ── HEADER ────────────────────────────────────────────────── */
+
+.cv-header { border-bottom:2px solid #1a3a5c;padding-bottom:10px;margin-bottom:14px; }
+
+.cv-name { font-size:20pt;font-weight:700;color:#1a3a5c;text-transform:uppercase;letter-spacing:.5px; }
+
+.cv-role { margin-top:2px;font-size:9.5pt;font-weight:600;color:#2e6da4;text-transform:uppercase;letter-spacing:1px; }
+
+.cv-contacts { margin-top:8px;font-size:8.5pt;color:#333;display:flex;flex-wrap:wrap;gap:4px 16px; }
+
 .cv-contacts a { color:#1a3a5c;text-decoration:none; }
 
-/* ── SECTIONS ─────────────────────────────────────────────── */
-.cv-section { margin-bottom:9px; }
-.cv-section-title { font-size:9pt;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#1a3a5c;border-bottom:1px solid #c0cfe0;padding-bottom:3px;margin-bottom:8px; }
+.cv-contacts a:hover { text-decoration:underline; }
 
-/* ── SUMMARY ──────────────────────────────────────────────── */
-.cv-summary { font-size:9.5pt;line-height:1.4; }
+/* ── SECTIONS ──────────────────────────────────────────────── */
 
-/* ── SKILLS ───────────────────────────────────────────────── */
-.cv-skills-grid { display:grid;grid-template-columns:1fr 1fr;gap:2px 24px; }
-.cv-skill { font-size:9pt; }
+.cv-section { margin-bottom:14px; }
+
+.cv-section-title { margin-bottom:8px;padding-bottom:3px;font-size:9pt;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#1a3a5c;border-bottom:1px solid #c0cfe0; }
+
+/* ── SUMMARY ───────────────────────────────────────────────── */
+
+.cv-summary { font-size:9.5pt;line-height:1.5;text-align:justify; }
+
+/* ── SKILLS ────────────────────────────────────────────────── */
+
+.cv-skills-grid { display:grid;grid-template-columns:1fr 1fr;gap:4px 24px; }
+
+.cv-skill { font-size:9pt;line-height:1.4;word-break:break-word; }
+
 .cv-skill::before { content:"▪ ";color:#1a3a5c; }
 
 /* ── EXPERIENCE / PROJECTS ────────────────────────────────── */
-.cv-job { margin-bottom:8px; }
+
+.cv-job { margin-bottom:10px; }
+
 .cv-job:last-child { margin-bottom:0; }
+
 .cv-job-header { display:flex;justify-content:space-between;align-items:flex-start;gap:16px; }
+
 .cv-job-left { flex:1;min-width:0; }
-.cv-job-title { font-size:9.5pt;font-weight:700;color:#111;line-height:1.2; }
-.cv-job-company { font-size:8.8pt;color:#2e6da4;font-weight:600;margin-top:1px; }
-.cv-job-date { font-size:8.5pt;color:#444;font-weight:600;white-space:nowrap;flex-shrink:0;padding-top:2px;min-width:140px;text-align:right; }
-.cv-ul { margin-top:2px;padding-left:18px; }
-.cv-ul li { font-size:9pt;margin-bottom:1px;line-height:1.3;color:#222; }
 
-/* ── EDUCATION ────────────────────────────────────────────── */
-.cv-edu-degree { font-weight:700;font-size:9.5pt; }
-.cv-edu-school { font-size:9pt;color:#2e6da4;font-weight:600; }
+.cv-job-title { font-size:9.5pt;font-weight:700;color:#111;line-height:1.3; }
 
-/* ── CERTIFICATIONS ───────────────────────────────────────── */
-.cv-certs-grid { display:flex;flex-direction:column;gap:2px; }
-.cv-cert { display:grid;grid-template-columns:1fr 100px;align-items:start;gap:12px;padding:3px 0;border-bottom:1px dotted #dde4ec; }
-.cv-cert-name { font-weight:600;color:#111;line-height:1.25;overflow-wrap:break-word; }
-.cv-cert-date { font-size:8.5pt;color:#444;font-weight:600;text-align:right;white-space:nowrap; }
+.cv-job-company { margin-top:2px;font-size:8.8pt;font-weight:600;color:#2e6da4; }
 
-/* ── BOTTOM ROW (Languages + Soft Skills) ─────────────────── */
-.cv-bottom-row { display:grid;grid-template-columns:280px 1fr;gap:28px;align-items:start; }
+.cv-job-date { min-width:140px;padding-top:2px;font-size:8.5pt;font-weight:600;color:#444;text-align:right;white-space:nowrap;flex-shrink:0; }
+
+.cv-ul { margin:4px 0 0;padding-left:18px; }
+
+.cv-ul li { margin-bottom:2px;font-size:9pt;line-height:1.4;color:#222; }
+
+/* ── EDUCATION ─────────────────────────────────────────────── */
+
+.cv-edu-degree { font-size:9.5pt;font-weight:700; }
+
+.cv-edu-school { margin-top:2px;font-size:9pt;font-weight:600;color:#2e6da4; }
+
+/* ── CERTIFICATIONS ────────────────────────────────────────── */
+
+.cv-certs-grid { display:flex;flex-direction:column;gap:4px; }
+
+.cv-cert { display:grid;grid-template-columns:1fr 100px;align-items:flex-start;gap:12px;padding:4px 0;border-bottom:1px dotted #dde4ec; }
+
+.cv-cert:last-child { border-bottom:none; }
+
+.cv-cert-name { font-size:8.5pt; font-weight:600;color:#111;line-height:1.35;overflow-wrap:break-word; }
+
+.cv-cert-date { font-size:8.5pt;font-weight:600;color:#444;text-align:right;white-space:nowrap; }
+
+/* ── LANGUAGES + SOFT SKILLS ──────────────────────────────── */
+
+.cv-bottom-row { display:grid;grid-template-columns:280px 1fr;gap:28px;align-items:flex-start; }
+
 .cv-bottom-row > .cv-section { min-width:0; }
-.cv-bottom-row .cv-skills-grid { display:grid;grid-template-columns:1fr;gap:3px; }
-.cv-bottom-row .cv-skill { line-height:1.35;word-break:break-word; }
-.cv-lang { font-size:9pt;line-height:1.45;margin-bottom:4px; }
 
-/* ── EMPTY STATE ──────────────────────────────────────────── */
-.cv-empty { color:#aaa;font-style:italic;font-size:9pt; }
+.cv-bottom-row .cv-skills-grid { grid-template-columns:1fr;gap:4px; }
 
-/* ── PRINT ────────────────────────────────────────────────── */
-@media print {
-  .cv-doc { width:100% !important;box-shadow:none !important;padding:0 !important;margin:0 !important; }
-  .cv-section    { break-inside:avoid;page-break-inside:avoid; }
-  .cv-job        { break-inside:avoid;page-break-inside:avoid; }
-  .cv-cert       { break-inside:avoid;page-break-inside:avoid; }
-  .cv-bottom-row { break-inside:avoid;page-break-inside:avoid; }
-  .cv-certs-grid { break-inside:avoid;page-break-inside:avoid; }
-}
+.cv-lang { margin-bottom:4px;font-size:9pt;line-height:1.45; }
+
+.cv-lang strong { margin-right:6px; }
+
+/* ── EMPTY STATE ───────────────────────────────────────────── */
+
+.cv-empty { font-size:9pt;font-style:italic;color:#9ca3af; }
+
+/* ── RESPONSIVE ────────────────────────────────────────────── */
+
+@media (max-width:900px) { .cv-job-header { flex-direction:column;gap:4px; } }
+
+@media (max-width:900px) { .cv-job-date { min-width:auto;text-align:left;white-space:normal; } }
+
+@media (max-width:900px) { .cv-bottom-row { grid-template-columns:1fr;gap:16px; } }
+
+@media (max-width:700px) { .cv-skills-grid { grid-template-columns:1fr; } }
+
+/* ── PRINT ─────────────────────────────────────────────────── */
+
+@media print { .cv-section { break-inside:avoid;page-break-inside:avoid; } }
+
+@media print { .cv-job { break-inside:avoid;page-break-inside:avoid; } }
+
+@media print { .cv-cert { break-inside:avoid;page-break-inside:avoid; } }
+
+@media print { .cv-bottom-row { break-inside:avoid;page-break-inside:avoid; } }
+
+@media print { .cv-certs-grid { break-inside:avoid;page-break-inside:avoid; } }

@@ -1,238 +1,386 @@
 import '../styles/modern.css';
 
-interface Personal {
-  name:string;
-  role:string;
-  email:string;
-  phone:string;
-  location:string;
-  linkedin:string;
+import type { CV } from '../types/cv.types';
+
+interface Props {
+  cv: CV;
 }
 
-interface Achievement {
-  id:string;
-  title:string;
-  description:string;
-}
-
-interface Experience {
-  id:string;
-  title:string;
-  company:string;
-  location:string;
-  startDate:string;
-  endDate:string;
-  bullets:string[];
-}
-
-interface Education {
-  degree:string;
-  school:string;
-  location:string;
-  graduation:string;
-}
-
-interface Language {
-  id:string;
-  name:string;
-  level:string;
-}
-
-interface Certification {
-  id:string;
-  name:string;
-  issuer:string;
-}
-
-interface Interest {
-  id:string;
-  title:string;
-  description:string;
-}
-
-interface ModernCVProps {
-  cv:{
-    personal:Personal;
-    summary:string;
-    achievements:Achievement[];
-    skills:string[];
-    certifications:Certification[];
-    interests:Interest[];
-    experience:Experience[];
-    education:Education;
-    languages:Language[];
-  };
-}
-
-export default function ModernCV({cv}:ModernCVProps){
+export default function ModernCV({ cv }: Props) {
 
   const {
+
     personal,
+
     summary,
-    achievements,
+
     skills,
+
     certifications,
-    interests,
+
     experience,
+
     education,
-    languages
-  }=cv;
 
-  return(
+    languages,
 
-    <div className="moderncv">
+    softSkills,
 
-      <header className="moderncv-header">
+  } = cv;
 
-        <h1>{personal.name || 'YOUR NAME'}</h1>
+  return (
 
-        <h2>{personal.role}</h2>
+    <div className="cv-container">
 
-        <div className="moderncv-contact">
+      <div className="cv-doc moderncv">
 
-          {personal.phone && <span>📞 {personal.phone}</span>}
+        <header className="moderncv-header">
 
-          {personal.email && <span>@ {personal.email}</span>}
+          <h1>
 
-          {personal.linkedin && <span>🔗 {personal.linkedin}</span>}
+            {personal.name || 'YOUR NAME'}
 
-          {personal.location && <span>📍 {personal.location}</span>}
+          </h1>
 
-        </div>
+          <h2>
 
-      </header>
+            {personal.role}
 
-      <div className="moderncv-body">
+          </h2>
 
-        <aside className="moderncv-left">
+          <div className="moderncv-contact">
 
-          <section>
+            {personal.phone && (
 
-            <h3>KEY ACHIEVEMENTS</h3>
+              <span>
 
-            {achievements.map(item=>(
+                📞 {personal.phone}
 
-              <div key={item.id} className="moderncv-card">
+              </span>
 
-                <div className="moderncv-icon">★</div>
+            )}
 
-                <div>
+            {personal.email && (
 
-                  <strong>{item.title}</strong>
+              <span>
 
-                  <p>{item.description}</p>
+                ✉️ {personal.email}
 
-                </div>
+              </span>
 
-              </div>
+            )}
 
-            ))}
+            {personal.linkedin && (
 
-          </section>
+              <span>
 
-          <section>
+                🔗 {personal.linkedin}
 
-            <h3>SKILLS</h3>
+              </span>
 
-            <div className="moderncv-tags">
+            )}
 
-              {skills.map((skill,index)=>(
+            {personal.location && (
 
-                <span key={index}>
+              <span>
 
-                  {skill}
+                📍 {personal.location}
 
-                </span>
+              </span>
 
-              ))}
+            )}
 
-            </div>
+          </div>
 
-          </section>
+        </header>
 
-          <section>
+        <div className="moderncv-body">
 
-            <h3>TRAINING / COURSES</h3>
+          <aside className="moderncv-left">
 
-            {certifications.map(course=>(
+            {!!skills.length && (
 
-              <div key={course.id} className="moderncv-item">
+              <section>
 
-                <strong>{course.name}</strong>
+                <h3>
 
-                <p>{course.issuer}</p>
+                  SKILLS
 
-              </div>
+                </h3>
 
-            ))}
+                <div className="moderncv-tags">
 
-          </section>
+                  {skills.map((skill,index)=>(
 
-          <section>
+                    <span key={index}>
 
-            <h3>INTERESTS</h3>
+                      {skill}
 
-            {interests.map(item=>(
+                    </span>
 
-              <div key={item.id} className="moderncv-card">
-
-                <div className="moderncv-icon">✦</div>
-
-                <div>
-
-                  <strong>{item.title}</strong>
-
-                  <p>{item.description}</p>
+                  ))}
 
                 </div>
 
-              </div>
+              </section>
 
-            ))}
+            )}
 
-          </section>
+            {!!certifications.length && (
 
-        </aside>
+              <section>
 
-        <main className="moderncv-right">
+                <h3>
 
-          <section>
+                  CERTIFICATIONS
 
-            <h3>SUMMARY</h3>
+                </h3>
 
-            <p>{summary}</p>
+                {certifications.map(cert=>(
 
-          </section>
+                  <div
 
-          <section>
+                    key={cert.id}
 
-            <h3>EXPERIENCE</h3>
+                    className="moderncv-item"
 
-            {experience.map(job=>(
+                  >
 
-              <div key={job.id} className="moderncv-job">
+                    <strong>
 
-                <div className="moderncv-job-header">
+                      {cert.name}
 
-                  <div>
+                    </strong>
 
-                    <h4>{job.title}</h4>
+                    <p>
 
-                    <span>{job.company}</span>
+                      {cert.date}
+
+                    </p>
 
                   </div>
+
+                ))}
+
+              </section>
+
+            )}
+
+            {!!languages.length && (
+
+              <section>
+
+                <h3>
+
+                  LANGUAGES
+
+                </h3>
+
+                <div className="moderncv-languages">
+
+                  {languages.map(lang=>(
+
+                    <div
+
+                      key={lang.id}
+
+                      className="moderncv-language"
+
+                    >
+
+                      <strong>
+
+                        {lang.name}
+
+                      </strong>
+
+                      <span>
+
+                        {lang.level}
+
+                      </span>
+
+                    </div>
+
+                  ))}
+
+                </div>
+
+              </section>
+
+            )}
+
+            {!!softSkills.length && (
+
+              <section>
+
+                <h3>
+
+                  SOFT SKILLS
+
+                </h3>
+
+                <div className="moderncv-tags">
+
+                  {softSkills.map((skill,index)=>(
+
+                    <span key={index}>
+
+                      {skill}
+
+                    </span>
+
+                  ))}
+
+                </div>
+
+              </section>
+
+            )}
+
+          </aside>
+
+          <main className="moderncv-right">
+
+            {summary && (
+
+              <section>
+
+                <h3>
+
+                  PROFILE
+
+                </h3>
+
+                <p>
+
+                  {summary}
+
+                </p>
+
+              </section>
+
+            )}
+
+            {!!experience.length && (
+
+              <section>
+
+                <h3>
+
+                  EXPERIENCE
+
+                </h3>
+
+                {experience.map(job=>(
+
+                  <div
+
+                    key={job.id}
+
+                    className="moderncv-job"
+
+                  >
+
+                    <div className="moderncv-job-header">
+
+                      <div>
+
+                        <h4>
+
+                          {job.title}
+
+                        </h4>
+
+                        <span>
+
+                          {job.company}
+
+                        </span>
+
+                      </div>
+
+                      <div className="moderncv-job-meta">
+
+                        <span>
+
+                          {job.startDate} - {job.endDate}
+
+                        </span>
+
+                        <span>
+
+                          {job.location}
+
+                        </span>
+
+                      </div>
+
+                    </div>
+
+                    <ul>
+
+                      {job.bullets
+
+                        .filter(Boolean)
+
+                        .map((bullet,index)=>(
+
+                          <li key={index}>
+
+                            {bullet}
+
+                          </li>
+
+                        ))
+
+                      }
+
+                    </ul>
+
+                  </div>
+
+                ))}
+
+              </section>
+
+            )}
+
+            {(education.degree || education.school) && (
+
+              <section>
+
+                <h3>
+
+                  EDUCATION
+
+                </h3>
+
+                <div className="moderncv-education">
+
+                  <h4>
+
+                    {education.degree}
+
+                  </h4>
+
+                  <span>
+
+                    {education.school}
+
+                  </span>
 
                   <div className="moderncv-job-meta">
 
                     <span>
 
-                      {job.startDate} - {job.endDate}
+                      {education.graduation}
 
                     </span>
 
                     <span>
 
-                      {job.location}
+                      {education.location}
 
                     </span>
 
@@ -240,103 +388,13 @@ export default function ModernCV({cv}:ModernCVProps){
 
                 </div>
 
-                <ul>
+              </section>
 
-                  {job.bullets
-                    .filter(Boolean)
-                    .map((bullet,index)=>(
+            )}
 
-                      <li key={index}>
+          </main>
 
-                        {bullet}
-
-                      </li>
-
-                  ))}
-
-                </ul>
-
-              </div>
-
-            ))}
-
-          </section>
-
-          <section>
-
-            <h3>EDUCATION</h3>
-
-            <div className="moderncv-education">
-
-              <h4>
-
-                {education.degree}
-
-              </h4>
-
-              <span>
-
-                {education.school}
-
-              </span>
-
-              <div className="moderncv-job-meta">
-
-                <span>
-
-                  {education.graduation}
-
-                </span>
-
-                <span>
-
-                  {education.location}
-
-                </span>
-
-              </div>
-
-            </div>
-
-          </section>
-
-          <section>
-
-            <h3>LANGUAGES</h3>
-
-            <div className="moderncv-languages">
-
-              {languages.map(lang=>(
-
-                <div key={lang.id} className="moderncv-language">
-
-                  <div>
-
-                    {lang.name}
-
-                  </div>
-
-                  <div>
-
-                    {lang.level}
-
-                  </div>
-
-                  <div className="moderncv-bar">
-
-                    <div className="moderncv-fill"></div>
-
-                  </div>
-
-                </div>
-
-              ))}
-
-            </div>
-
-          </section>
-
-        </main>
+        </div>
 
       </div>
 

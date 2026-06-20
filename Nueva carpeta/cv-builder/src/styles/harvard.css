@@ -1,0 +1,59 @@
+.harvardcv { width:100%;font-family:"Times New Roman",Georgia,serif;color:#111827;font-size:12pt;line-height:1.45; }
+
+.harvardcv-header { text-align:center;padding-bottom:14px;border-bottom:1px solid #111827;margin-bottom:18px; }
+
+.harvardcv-header h1 { margin:0;font-size:28px;font-weight:700;letter-spacing:.5px;text-transform:uppercase; }
+
+.harvardcv-contact { margin-top:10px;font-size:12px;display:flex;justify-content:center;flex-wrap:wrap;gap:12px; }
+
+.harvardcv-contact span { white-space:nowrap; }
+
+.harvardcv-section { margin-bottom:22px; }
+
+.harvardcv-section-title { margin:0 0 12px 0;font-size:15px;font-weight:700;text-align:center;text-transform:uppercase;letter-spacing:.8px; }
+
+.harvardcv-summary { text-align:justify; }
+
+.harvardcv-item { margin-bottom:18px; }
+
+.harvardcv-row { display:flex;justify-content:space-between;align-items:flex-start;gap:24px; }
+
+.harvardcv-title { font-size:14px;font-weight:700; }
+
+.harvardcv-subtitle { font-size:13px;font-weight:600; }
+
+.harvardcv-meta { font-size:12px;text-align:right;white-space:nowrap; }
+
+.harvardcv-bullets { margin:8px 0 0 18px;padding:0;display:flex;flex-direction:column;gap:6px; }
+
+.harvardcv-bullets li { line-height:1.5; }
+
+.harvardcv-skills { display:flex;flex-wrap:wrap;gap:8px; }
+
+.harvardcv-chip { padding:4px 10px;border:1px solid #d1d5db;border-radius:999px;font-size:11px; }
+
+.harvardcv-languages { display:flex;flex-wrap:wrap;gap:12px; }
+
+.harvardcv-language { display:flex;gap:6px; }
+
+.harvardcv-certifications { display:flex;flex-direction:column;gap:10px; }
+
+.harvardcv-certification { display:flex;justify-content:space-between;gap:16px; }
+
+.harvardcv-softskills { display:flex;flex-wrap:wrap;gap:8px; }
+
+.harvardcv-divider { height:1px;background:#e5e7eb;margin:18px 0; }
+
+@media (max-width:900px) { .harvardcv-row { flex-direction:column;gap:6px; } }
+
+@media (max-width:900px) { .harvardcv-meta { text-align:left;white-space:normal; } }
+
+@media (max-width:700px) { .harvardcv-header h1 { font-size:24px; } }
+
+@media (max-width:700px) { .harvardcv-contact { justify-content:flex-start; } }
+
+@media print { .harvardcv { font-size:11pt; } }
+
+@media print { .harvardcv-section { break-inside:avoid;page-break-inside:avoid; } }
+
+@media print { .harvardcv-item { break-inside:avoid;page-break-inside:avoid; } }
