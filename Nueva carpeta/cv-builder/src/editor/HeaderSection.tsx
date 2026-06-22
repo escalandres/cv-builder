@@ -40,7 +40,11 @@ export default function HeaderSection({ personal, variant = 'standard' }: Props)
       <>
         <div className="europass-header">
           <h1>{personal.name || 'Your Name'}</h1>
-          <span className="europass-brand">europass</span>
+          <div className="europass-logo">
+            <img src="/europass-logo.webp" alt="Europass Logo" />
+            <span className="europass-brand">europass</span>
+          </div>
+
         </div>
         {personal.role && <div className="europass-text">{personal.role}</div>}
         <div className="europass-divider" />

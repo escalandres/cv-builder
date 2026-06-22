@@ -3,6 +3,9 @@ import { useState } from 'react';
 import { useCv } from './hooks/useCv';
 import { useToast } from './hooks/useToast';
 
+import { useResizableWidth } from './hooks/useResizableWidth';
+import ResizeHandle from './ui/ResizeHandle';
+
 import Topbar from './components/Topbar';
 import EditorPanel from './components/EditorPanel';
 import PreviewPanel from './components/PreviewPanel';
@@ -54,6 +57,12 @@ export default function App() {
     loadSample,
     clearAll,
   } = useCv();
+
+  const sidebar = useResizableWidth({
+    defaultWidth: 440,
+    min: 320,
+    max: 720,
+  });
 
   const handleExportJSON = () => {
     exportJSON();
@@ -140,12 +149,10 @@ export default function App() {
       />
 
       <main className="app-main">
-
         {activeTab === 'editor' && (
-
           <>
-
             <EditorPanel
+              width={sidebar.width}
               cv={cv}
               visible
               onTemplate={setTemplate}
@@ -174,25 +181,26 @@ export default function App() {
               onRemoveSoftSkill={removeSoftSkill}
             />
 
+            <ResizeHandle
+              onMouseDown={sidebar.onMouseDown}
+              onDoubleClick={sidebar.resetWidth}
+            />
+
             <PreviewPanel
               cv={cv}
               onExportPDF={handleExportPDF}
               toolbarLabel="Live preview"
             />
-
           </>
-
         )}
 
         {activeTab === 'preview' && (
-
           <PreviewPanel
             cv={cv}
             onExportPDF={handleExportPDF}
             toolbarLabel="ATS-ready preview · Print or Ctrl+P to save as PDF"
             fullWidth
           />
-
         )}
 
         {activeTab === 'json' && (

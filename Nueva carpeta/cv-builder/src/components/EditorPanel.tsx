@@ -3,6 +3,7 @@ import { CV_TEMPLATES, LANGUAGES, LANGUAGE_LEVELS } from '../data/constants';
 import Field       from '../ui/Field';
 import SectionCard from '../ui/SectionCard';
 import BulletEditor from '../ui/BulletEditor';
+import MonthInput from '../ui/MonthInput';
 import '../styles/editor.css';
 
 interface Props {
@@ -32,11 +33,12 @@ interface Props {
   onSetSoftSkill:   (i: number, val: string) => void;
   onRemoveSoftSkill:(i: number) => void;
   visible:          boolean;
+  width:            number;
 }
 
-export default function EditorPanel({ cv, visible, ...on }: Props) {
+export default function EditorPanel({ width, cv, visible, ...on }: Props) {
   return (
-    <div className="editor-panel" style={{ display: visible ? 'flex' : 'none' }}>
+    <div className="editor-panel" style={{ display: visible ? 'flex' : 'none', width }}>
       <div className="editor-scroll">
 
         {/* CV Format */}
@@ -135,10 +137,10 @@ export default function EditorPanel({ cv, visible, ...on }: Props) {
               </Field>
               <div className="field-row">
                 <Field label="Start Date">
-                  <input value={job.startDate} onChange={e => on.onSetExp(job.id, 'startDate', e.target.value)} placeholder="Jan 2022" />
+                  <MonthInput value={job.startDate} onChange={v => on.onSetExp(job.id, 'startDate', v)} placeholder="Jan 2022" />
                 </Field>
                 <Field label="End Date">
-                  <input value={job.endDate} onChange={e => on.onSetExp(job.id, 'endDate', e.target.value)} placeholder="Present" />
+                  <MonthInput value={job.endDate} onChange={v => on.onSetExp(job.id, 'endDate', v)} placeholder="Dec 2023" allowPresent />
                 </Field>
               </div>
               <label className="form-group-label">Achievements / Responsibilities</label>
@@ -167,10 +169,10 @@ export default function EditorPanel({ cv, visible, ...on }: Props) {
               </Field>
               <div className="field-row">
                 <Field label="Start Date">
-                  <input value={p.startDate} onChange={e => on.onSetProj(p.id, 'startDate', e.target.value)} placeholder="Mar 2023" />
+                  <MonthInput value={p.startDate} onChange={v => on.onSetProj(p.id, 'startDate', v)} placeholder="Mar 2023" />
                 </Field>
                 <Field label="End Date">
-                  <input value={p.endDate} onChange={e => on.onSetProj(p.id, 'endDate', e.target.value)} placeholder="Jun 2023" />
+                  <MonthInput value={p.endDate} onChange={v => on.onSetProj(p.id, 'endDate', v)} placeholder="Jun 2023" allowPresent />
                 </Field>
               </div>
               <label className="form-group-label">Description</label>
@@ -206,7 +208,7 @@ export default function EditorPanel({ cv, visible, ...on }: Props) {
                   <input value={c.name} onChange={e => on.onSetCert(c.id, 'name', e.target.value)} placeholder="AWS Solutions Architect" />
                 </Field>
                 <Field label="Date">
-                  <input value={c.date} onChange={e => on.onSetCert(c.id, 'date', e.target.value)} placeholder="Jan 2024" />
+                  <MonthInput value={c.date} onChange={v => on.onSetCert(c.id, 'date', v)} placeholder="Jan 2024" />
                 </Field>
               </div>
             </div>

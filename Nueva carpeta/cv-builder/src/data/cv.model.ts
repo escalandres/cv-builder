@@ -39,6 +39,162 @@ export const EMPTY_CV: CV = {
 
 // ── CV de muestra ─────────────────────────────────────────────
 
+// export const SAMPLE_CV: CV = {
+//   template: 'standard',
+
+//   personal: {
+//     name: 'Andres Escala',
+//     role: 'Full Stack Developer',
+//     email: 'andres.escala.344@gmail.com',
+//     phone: '+52 5545464585',
+//     location: 'Mexico City, Mexico',
+//     address: 'Mexico City, Mexico',
+//     dateOfBirth: '1990-01-01',
+//     nationality: 'Mexican',
+//     gender: 'Male',
+//     linkedin: 'linkedin.com/in/escalandres',
+//     github: 'github.com/escalandres',
+//     portfolio: 'escalandres-portfolio.vercel.app',
+//   },
+
+//   summary:
+//     'Full Stack Developer with 3+ years of experience building scalable web applications and RESTful APIs using .NET, Node.js, and Express.js. Skilled in React.js, TypeScript, SQL Server, and MongoDB. Hands-on experience customizing Oracle NetSuite ERP via SuiteScript 2.0 and building SOAP/REST integrations. Holds 5 active certifications in Oracle Cloud and Microsoft Azure. Fluent in English (B2) and Spanish (native).',
+
+//   skills: [
+//     'HTML5, CSS3, JavaScript (ES6+), TypeScript',
+//     'React.js, Node.js, Express.js, jQuery, EJS',
+//     'C#, .NET Framework, ASP.NET, .NET Core 6/8',
+//     'SQL Server, MySQL, MongoDB – query optimization',
+//     'SuiteScript 2.0: Suitelet, RESTlet, Map/Reduce, Workflow',
+//     'RESTful APIs, SOAP integrations, Oracle NetSuite ERP',
+//     'Git, GitHub, Azure, Netlify, GitHub Pages',
+//     'Linux: Ubuntu, CentOS 7 – server administration',
+//   ],
+
+//   experience: [
+//     {
+//       id: 1,
+//       title: 'Technical Consultant',
+//       company: 'Oracle NetSuite',
+//       location: 'Mexico City, Mexico',
+//       startDate: 'Aug 2024',
+//       endDate: 'Present',
+//       bullets: [
+//         'Implement ERP solutions using SuiteScript 2.0 (Suitelets, Clientscripts, Map/Reduce, RESTlets, Workflows, User Events).',
+//         'Develop NetSuite localization customizations for Mexico, Colombia, and Brazil SuiteApps.',
+//         'Build RESTful and SOAP API integrations between NetSuite and third-party systems.',
+//         'Developed .NET desktop tools that reduced internal account setup time by 30%.',
+//         'Create technical documentation and manuals that improve cross-team workflows and onboarding speed.',
+//       ],
+//     },
+
+//     {
+//       id: 2,
+//       title: 'Web Developer Intern',
+//       company: 'INFO100 S.A DE C.V',
+//       location: 'Mexico City, Mexico',
+//       startDate: 'Nov 2022',
+//       endDate: 'Aug 2024',
+//       bullets: [
+//         'Built web applications with ASP.NET Framework 4.6, .NET Core 6/8, JavaScript, jQuery, Ajax, and Bootstrap.',
+//         'Maintained desktop applications in .NET Framework 4.6 and Visual Basic; administered CentOS 7 Linux servers.',
+//         'Developed internal automation tools and backend services in .NET and SQL Server.',
+//       ],
+//     },
+//   ],
+
+//   projects: [
+//     {
+//       id: 1,
+//       title: 'PLD_WEB – Anti-Money Laundering Platform',
+//       tech: 'ASP.NET Framework · Bootstrap 4 · SQL Server',
+//       startDate: 'Nov 2022',
+//       endDate: 'Nov 2023',
+//       bullets: [
+//         'Web app for detecting and preventing money laundering in microfinance companies.',
+//       ],
+//     },
+
+//     {
+//       id: 2,
+//       title: 'CONDUSEF Management – Regulatory Complaints Platform',
+//       tech: 'ASP.NET · SQL Server',
+//       startDate: 'Dec 2023',
+//       endDate: 'Jul 2024',
+//       bullets: [
+//         'Streamlined upload of complaints and clarifications to the CONDUSEF financial regulatory entity.',
+//       ],
+//     },
+//   ],
+
+//   education: {
+//     degree: 'Bachelor of Telematics Engineering',
+//     school: 'Instituto Politécnico Nacional (IPN)',
+//     location: 'Mexico City, Mexico',
+//     graduation: '',
+//     eqf: '',
+//     gpa: '',
+//     thesis: '',
+//     coursework: [],
+//   },
+
+//   certifications: [
+//     {
+//       id: 1,
+//       name: 'Oracle Cloud Infrastructure 2025 Certified Generative AI Professional',
+//       date: 'Jan 2026',
+//     },
+
+//     {
+//       id: 2,
+//       name: 'Oracle NetSuite SuiteFoundation Specialist',
+//       date: 'Dec 2025',
+//     },
+
+//     {
+//       id: 3,
+//       name: 'Oracle Cloud Infrastructure 2025 Certified AI Foundations Associate',
+//       date: 'Dec 2025',
+//     },
+
+//     {
+//       id: 4,
+//       name: 'Oracle NetSuite Certified AI Foundations Associate',
+//       date: 'Nov 2025',
+//     },
+
+//     {
+//       id: 5,
+//       name: 'Microsoft Certified: Azure Fundamentals (AZ-900)',
+//       date: 'Feb 2022',
+//     },
+//   ],
+
+//   languages: [
+//     {
+//       id: 1,
+//       name: 'English',
+//       level: 'B2 Upper Intermediate',
+//     },
+
+//     {
+//       id: 2,
+//       name: 'Spanish',
+//       level: 'Native',
+//     },
+//   ],
+
+//   softSkills: [
+//     'Leadership',
+//     'Planning & Coordination',
+//     'Teamwork & Collaboration',
+//     'Conflict Resolution',
+//     'Creativity & Problem Solving',
+//     'Continuous Learning',
+//     'Interpersonal Communication',
+//   ],
+// };
+
 export const SAMPLE_CV: CV = {
   template: 'standard',
 
@@ -48,17 +204,17 @@ export const SAMPLE_CV: CV = {
     email: 'andres.escala.344@gmail.com',
     phone: '+52 5545464585',
     location: 'Mexico City, Mexico',
-    address: '',
-    dateOfBirth: '',
-    nationality: '',
-    gender: '',
+    address: 'Mexico City, Mexico', // Ejemplo
+    dateOfBirth: '1990-01-01', // Ejemplo
+    nationality: 'Mexican', // Ejemplo
+    gender: 'Male', // Ejemplo
     linkedin: 'linkedin.com/in/escalandres',
     github: 'github.com/escalandres',
     portfolio: 'escalandres-portfolio.vercel.app',
   },
 
   summary:
-    'Full Stack Developer with 3+ years of experience building scalable web applications and RESTful APIs using .NET, Node.js, and Express.js. Skilled in React.js, TypeScript, SQL Server, and MongoDB. Hands-on experience customizing Oracle NetSuite ERP via SuiteScript 2.0 and building SOAP/REST integrations. Holds 5 active certifications in Oracle Cloud and Microsoft Azure. Fluent in English (B2) and Spanish (native).',
+    'Full Stack Developer & Technical Consultant with 4 years of experience designing, building, and scaling enterprise-grade web applications and RESTful APIs using .NET (C#), Node.js, and Express.js. Expert in developing modern, maintainable user interfaces with React.js (3 years). Strong proficiency in database design, migration, and query optimization for SQL Server and MongoDB. Proven track record in customizing ERP systems and bridge-building between technical requirements and business goals. Experienced in QA processes, CI/CD pipelines, and Agile environments, ensuring high-quality and stable software delivery.',
 
   skills: [
     'HTML5, CSS3, JavaScript (ES6+), TypeScript',
@@ -131,11 +287,16 @@ export const SAMPLE_CV: CV = {
     degree: 'Bachelor of Telematics Engineering',
     school: 'Instituto Politécnico Nacional (IPN)',
     location: 'Mexico City, Mexico',
-    graduation: '',
-    eqf: '',
-    gpa: '',
-    thesis: '',
-    coursework: [],
+    graduation: '2023', // Ejemplo
+    eqf: 'EQF Level 6', // Ejemplo
+    gpa: '3.8/4.0', // Ejemplo
+    thesis: 'Design and implementation of IoT tracking systems', // Ejemplo
+    coursework: [
+      'Software Engineering',
+      'Distributed Systems',
+      'Database Systems',
+      'Computer Networks',
+    ], // Ejemplo
   },
 
   certifications: [
@@ -174,7 +335,7 @@ export const SAMPLE_CV: CV = {
     {
       id: 1,
       name: 'English',
-      level: 'B2 Upper Intermediate',
+      level: 'B2 - Upper Intermediate',
     },
 
     {

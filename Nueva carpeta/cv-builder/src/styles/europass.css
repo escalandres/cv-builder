@@ -41,3 +41,9 @@
 .europass-table td { padding:10px;border-bottom:1px solid #ddd;text-align:center; }
 
 .europass-table td:first-child { text-align:left; }
+
+.europass-logo { display: flex; align-items: center; gap: 8px; }
+
+.europass-logo img { width: 60px; height: auto; }
+
+.europass-brand { color: #4B0082; font-weight: bold; font-size: 1.25rem; text-transform: lowercase; }

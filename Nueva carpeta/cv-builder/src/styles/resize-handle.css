@@ -1,0 +1,38 @@
+.resize-handle {
+  width: 6px;
+  flex-shrink: 0;
+  cursor: col-resize;
+  background: transparent;
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .15s;
+}
+
+.resize-handle:hover,
+.resize-handle:active {
+  background: var(--teal-glow);
+}
+
+.resize-handle-grip {
+  width: 3px;
+  height: 36px;
+  border-radius: 999px;
+  background: var(--border);
+  transition: background .15s;
+}
+
+.resize-handle:hover .resize-handle-grip,
+.resize-handle:active .resize-handle-grip {
+  background: var(--teal);
+}
+
+@media (max-width: 900px) {
+  .resize-handle { display: none; }
+}
+
+@media print {
+  .resize-handle { display: none !important; }
+}
