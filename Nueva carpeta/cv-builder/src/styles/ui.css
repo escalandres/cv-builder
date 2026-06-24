@@ -8,7 +8,9 @@
 
 .field input,.field select,.field textarea { width:100%; }
 
-.field-row { display:grid;grid-template-columns:1fr 1fr;gap:16px; }
+.field-row { display:flex;flex-wrap:wrap;gap:16px; }
+
+.field-row > .field { flex:1 1 140px;min-width:140px; }
 
 .section-card { background:#fff;border:1px solid #e5e7eb;border-radius:14px;overflow:hidden; }
 
@@ -125,13 +127,12 @@
 
 .month-input-wrap {
   display: flex;
-  align-items: center;
-  gap: 12px;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .month-input {
-  flex: 1;
-  min-width: 0;
+  width: 100%;
   font: inherit;
   padding: 10px 12px;
   border: 1.5px solid var(--border);
@@ -143,8 +144,11 @@
   transition: var(--transition);
   appearance: none;
   -webkit-appearance: none;
+  -webkit-transition: var(--transition);
+  -moz-transition: var(--transition);
+  -ms-transition: var(--transition);
+  -o-transition: var(--transition);
 }
-
 .month-input:focus {
   border-color: var(--teal);
   box-shadow: 0 0 0 3px var(--teal-glow);
@@ -156,7 +160,6 @@
   background: var(--surface2);
 }
 
-/* Oculta el spinner nativo en algunos browsers */
 .month-input::-webkit-calendar-picker-indicator {
   opacity: .5;
   cursor: pointer;
@@ -171,21 +174,20 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
   color: var(--muted);
-  white-space: nowrap;
   cursor: pointer;
   user-select: none;
 }
 
 .month-present-label input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   accent-color: var(--teal);
   cursor: pointer;
 }
 
-@media (max-width:700px) { .field-row { grid-template-columns:1fr; } }
+/* @media (max-width:700px) { .field-row { grid-template-columns:1fr; } } */
 
 @media (max-width:700px) { .card-grid { grid-template-columns:1fr; } }
