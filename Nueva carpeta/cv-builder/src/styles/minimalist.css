@@ -1,0 +1,62 @@
+/* ── Base ── */
+.minimalcv { width:210mm;min-height:297mm;background:#fff;padding:28px 36px;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif;color:#2a2a2a;font-size:10pt;line-height:1.5;box-shadow:0 4px 32px rgba(0,0,0,.18); }
+
+/* ── Header ── */
+.minimalcv-header { margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #ccc; }
+
+.minimalcv-header h1 { margin:0 0 2px;font-size:24pt;font-weight:700;color:#111;text-transform:uppercase;letter-spacing:1px;line-height:1.1; }
+
+.minimalcv-role { font-size:11pt;font-weight:400;color:#444;margin-bottom:6px; }
+
+.minimalcv-contact { display:flex;flex-wrap:wrap;gap:4px 20px;font-size:8.5pt;color:#555; }
+
+/* ── Sections ── */
+.minimalcv-section { margin-bottom:14px; }
+
+.minimalcv-section-title { margin:0 0 8px;font-size:8.5pt;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.8px;border-bottom:none; }
+
+/* ── Jobs / Education ── */
+.minimalcv-job { margin-bottom:12px; }
+
+.minimalcv-job:last-child { margin-bottom:0; }
+
+.minimalcv-job-row { display:flex;justify-content:space-between;align-items:baseline;gap:8px; }
+
+.minimalcv-job-title { font-size:11pt;font-weight:700;color:#111; }
+
+.minimalcv-job-company { font-size:10pt;font-weight:400;color:#555; }
+
+.minimalcv-meta { font-size:8.5pt;color:#888;white-space:nowrap;flex-shrink:0; }
+
+.minimalcv-ul { margin:5px 0 0;padding-left:16px; }
+
+.minimalcv-ul li { font-size:9pt;color:#444;margin-bottom:2px;line-height:1.45; }
+
+/* ── Summary ── */
+.minimalcv-summary { margin:0;font-size:9.5pt;line-height:1.6;color:#444; }
+
+/* ── Projects ── */
+.minimalcv-project-title { font-size:10.5pt;font-weight:700;color:#111;text-transform:uppercase; }
+
+.minimalcv-project-desc { margin:4px 0 0;font-size:9pt;color:#555; }
+
+/* ── Certifications ── */
+.minimalcv-certs { display:grid;grid-template-columns:1fr 1fr;gap:6px 24px; }
+
+.minimalcv-cert { display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding-bottom:4px;border-bottom:1px solid #eee; }
+
+.minimalcv-cert-name { font-size:9pt;font-weight:600;color:#111; }
+
+/* ── Languages ── */
+.minimalcv-languages { display:flex;flex-wrap:wrap;gap:8px 32px; }
+
+.minimalcv-language { display:flex;gap:6px;align-items:baseline;font-size:9.5pt; }
+
+.minimalcv-language strong { color:#111;font-weight:600; }
+
+/* ── Skills ── */
+.minimalcv-skills { margin:0;font-size:9.5pt;color:#444;line-height:1.7; }
+
+@media print {
+  .minimalcv { box-shadow:none; }
+}

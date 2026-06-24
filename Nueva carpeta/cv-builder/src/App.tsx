@@ -204,38 +204,28 @@ export default function App() {
         )}
 
         {activeTab === 'json' && (
-
           <JsonPanel
             cv={cv}
             onExportJSON={handleExportJSON}
             onOpenImport={() => setShowImportModal(true)}
           />
-
         )}
-
       </main>
 
       {showImportModal && (
-
         <ImportModal
           onImport={handleImportJSON}
           onClose={() => setShowImportModal(false)}
         />
-
       )}
-
       {toast && (
-
         <Toast
           type={toast.type}
           icon={toast.icon}
           msg={toast.msg}
         />
-
       )}
-
     </div>
-
   );
 
 }

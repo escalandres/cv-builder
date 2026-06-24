@@ -69,7 +69,7 @@ export default function HarvardCV({ cv }: Props) {
 
       {/* ── Página 2 ── */}
 
-      <div className="cv-doc harvardcv">
+      <div className="harvardcv">
 
         {cv.skills.length > 0 && (
 

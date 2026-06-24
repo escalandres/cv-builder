@@ -1,4 +1,4 @@
-.europass { width:210mm;min-height:297mm;background:#fff;padding:14mm 16mm;box-sizing:border-box;font-family:Arial,sans-serif;color:#333;font-size:11pt; }
+.europass { width:210mm;min-height:297mm;background:#fff;padding:14mm 16mm;box-sizing:border-box;box-shadow:0 4px 32px rgba(0,0,0,.18);font-family:Arial,sans-serif;color:#333;font-size:11pt; }
 
 .europass-header { display:flex;justify-content:space-between;align-items:center;margin-bottom:12px; }
 

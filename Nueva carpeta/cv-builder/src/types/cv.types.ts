@@ -2,7 +2,9 @@ export type CVTemplate =
   | 'standard'
   | 'harvard'
   | 'europass'
-  | 'modern';
+  | 'modern'
+  | 'minimalist'
+  | 'academic';
 
 // ── Tipos base ────────────────────────────────────────────────
 

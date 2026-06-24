@@ -3,7 +3,7 @@ export const CV_TEMPLATES = [
   { value: 'harvard',  label: 'Harvard'    },
   { value: 'europass', label: 'Europass'   },
   { value: 'modern',   label: 'Modern ATS' },
-  { value: 'minimal',  label: 'Minimal'    },
+  { value: 'minimalist',  label: 'Minimalist' },
   { value: 'academic', label: 'Academic'   },
 ] as const;
 

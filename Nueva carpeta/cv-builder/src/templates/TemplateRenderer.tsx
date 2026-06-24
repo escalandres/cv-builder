@@ -5,12 +5,16 @@ import StandardCV from './StandardCV';
 import HarvardCV from './HarvardCV';
 import EuropassCV from './EuropassCV';
 import ModernCV from './ModernCV';
+import MinimalistCV  from './MinimalistCV';
+import AcademicCV from './AcademicCV';
 
 const TEMPLATE_COMPONENTS: Record<CVTemplate, ComponentType<{ cv: CV }>> = {
   standard: StandardCV,
   harvard: HarvardCV,
   europass: EuropassCV,
   modern: ModernCV,
+  minimalist: MinimalistCV,
+  academic: AcademicCV,
 };
 
 interface Props {

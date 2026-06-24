@@ -1,4 +1,4 @@
-.harvardcv { width:100%;font-family:"Times New Roman",Georgia,serif;color:#111827;font-size:12pt;line-height:1.45; }
+.harvardcv { width:210mm;min-height:297mm;background:#fff;padding:28px 32px;box-sizing:border-box;font-family:"Times New Roman",Georgia,serif;color:#111827;font-size:12pt;line-height:1.45; }
 
 .harvardcv-header { text-align:center;padding-bottom:14px;border-bottom:1px solid #111827;margin-bottom:18px; }
 

@@ -30,7 +30,7 @@ export default function EuropassCV({ cv }: Props) {
 
       {/* ── Página 1 ── */}
 
-      <div className="cv-doc europass">
+      <div className="europass">
 
         <HeaderSection
           personal={cv.personal}
@@ -59,7 +59,7 @@ export default function EuropassCV({ cv }: Props) {
 
       {/* ── Página 2 ── */}
 
-      <div className="cv-doc europass">
+      <div className="europass">
 
         {hasEducation && (
 
