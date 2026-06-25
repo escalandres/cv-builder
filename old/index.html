@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="description" content="Create a professional CV with our ATS-friendly CV Builder. Customize your resume with ease and land your dream job.">
+<meta name="keywords" content="CV Builder, Resume Builder, ATS Friendly, Professional CV, Job Application, Career Tools">
+<meta name="author" content="Andres Escala">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<title>CV Builder – ATS Ready</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0f1f3d;
+    --navy-mid: #1a3260;
+    --navy-light: #243b6e;
+    --teal: #0ea5e9;
+    --teal-dim: #0284c7;
+    --teal-glow: rgba(14,165,233,0.12);
+    --bg: #f0f4f8;
+    --surface: #ffffff;
+    --surface2: #f8fafc;
+    --border: #e2e8f0;
+    --text: #0f172a;
+    --muted: #64748b;
+    --success: #10b981;
+    --danger: #ef4444;
+    --warn: #f59e0b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  /* ── TOPBAR ── */
+  .topbar {
+    background: var(--navy);
+    height: 52px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    gap: 16px;
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  }
+  .topbar-logo { color: #fff; font-weight: 700; font-size: 15px; letter-spacing: -0.3px; display: flex; align-items: center; gap: 8px; }
+  .topbar-logo span { color: var(--teal); }
+  .topbar-spacer { flex: 1; }
+  .topbar-tabs { display: flex; gap: 4px; }
+  .tab-btn {
+    background: transparent; border: none; color: #94a3b8;
+    padding: 6px 14px; border-radius: 6px; cursor: pointer;
+    font-size: 13px; font-weight: 500; font-family: inherit; transition: all .15s;
+  }
+  .tab-btn.active { background: var(--teal-glow); color: var(--teal); }
+  .tab-btn:hover:not(.active) { color: #fff; background: rgba(255,255,255,0.06); }
+  .topbar-actions { display: flex; gap: 8px; }
+  .btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 7px; font-size: 12.5px; font-weight: 600; font-family: inherit; cursor: pointer; border: none; transition: all .15s; }
+  .btn-ghost { background: rgba(255,255,255,0.07); color: #cbd5e1; border: 1px solid rgba(255,255,255,0.12); }
+  .btn-ghost:hover { background: rgba(255,255,255,0.13); color: #fff; }
+  .btn-teal { background: var(--teal); color: #fff; }
+  .btn-teal:hover { background: var(--teal-dim); }
+  .btn-danger { background: var(--danger); color: #fff; }
+  .btn-success { background: var(--success); color: #fff; }
+  .btn-sm { padding: 4px 10px; font-size: 11.5px; }
+
+  /* ── LAYOUT ── */
+  .app-body { display: flex; height: calc(100vh - 52px); margin-top: 52px; overflow: hidden; }
+
+  /* ── EDITOR PANEL ── */
+  .editor-panel {
+    width: 420px; min-width: 320px;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    display: flex; flex-direction: column;
+    overflow: hidden;
+  }
+  .editor-scroll { flex: 1; overflow-y: auto; padding: 16px; }
+  .editor-scroll::-webkit-scrollbar { width: 4px; }
+  .editor-scroll::-webkit-scrollbar-track { background: transparent; }
+  .editor-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+  /* ── SECTIONS ── */
+  .section-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .section-header {
+    display: flex; align-items: center; gap: 10px;
+    padding: 11px 14px;
+    background: var(--surface2);
+    cursor: pointer;
+    user-select: none;
+    transition: background .15s;
+  }
+  .section-header:hover { background: #eef2f7; }
+  .section-icon { font-size: 15px; }
+  .section-title { font-size: 13px; font-weight: 600; flex: 1; color: var(--navy); }
+  .section-chevron { color: var(--muted); font-size: 11px; transition: transform .2s; }
+  .section-chevron.open { transform: rotate(180deg); }
+  .section-body { padding: 14px; border-top: 1px solid var(--border); }
+
+  /* ── FORM ELEMENTS ── */
+  .field { margin-bottom: 10px; }
+  .field label { display: block; font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 4px; }
+  .field input, .field textarea, .field select {
+    width: 100%; padding: 8px 10px;
+    border: 1.5px solid var(--border); border-radius: 6px;
+    font-size: 13px; font-family: inherit; color: var(--text);
+    background: var(--surface); outline: none; transition: border-color .15s;
+    resize: vertical;
+  }
+  .field input:focus, .field textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 3px var(--teal-glow); }
+  .field textarea { min-height: 60px; }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .field-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+
+  /* ── LIST ITEMS (jobs, certs, etc) ── */
+  .list-item {
+    border: 1px solid var(--border); border-radius: 8px;
+    padding: 10px 12px; margin-bottom: 8px;
+    background: var(--surface2);
+  }
+  .list-item-header { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 8px; }
+  .list-item-title { font-size: 12.5px; font-weight: 600; flex: 1; color: var(--navy); }
+  .list-item-sub { font-size: 11px; color: var(--muted); }
+  .btn-icon { background: none; border: none; cursor: pointer; padding: 3px 6px; border-radius: 4px; font-size: 13px; transition: background .12s; color: var(--muted); }
+  .btn-icon:hover { background: #fee2e2; color: var(--danger); }
+  .btn-icon.up:hover { background: #dbeafe; color: #3b82f6; }
+  .btn-add { display: flex; align-items: center; gap: 6px; width: 100%; padding: 8px; border: 1.5px dashed var(--border); border-radius: 7px; background: none; cursor: pointer; font-size: 12.5px; font-weight: 500; color: var(--muted); font-family: inherit; transition: all .15s; justify-content: center; }
+  .btn-add:hover { border-color: var(--teal); color: var(--teal); background: var(--teal-glow); }
+
+  /* bullet editor */
+  .bullet-list { margin-top: 6px; }
+  .bullet-row { display: flex; gap: 6px; align-items: flex-start; margin-bottom: 5px; }
+  .bullet-row input { flex: 1; }
+  .bullet-row .btn-icon { margin-top: 6px; }
+
+  /* skill row */
+  .skill-row {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  .skill-row input,
+.skill-row select,
+.bullet-row input {
+    flex: 1;
+    width: 100%;
+    padding: 8px 10px;
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    font-size: 13px;
+    font-family: inherit;
+    color: var(--text);
+    background: var(--surface);
+    outline: none;
+    transition: all .15s;
+  }
+
+  .skill-row input:focus,
+.skill-row select:focus,
+.bullet-row input:focus {
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px var(--teal-glow);
+  }
+
+  .form-group-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    margin-bottom: 6px;
+  }
+
+  /* ── PREVIEW PANEL ── */
+  .preview-panel {
+    flex: 1; overflow: hidden;
+    display: flex; flex-direction: column;
+    background: #d1dbe8;
+  }
+  .preview-toolbar {
+    background: var(--navy-mid);
+    padding: 8px 16px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .preview-toolbar span { color: #94a3b8; font-size: 12px; }
+  .preview-scroll { flex: 1; overflow-y: auto; padding: 24px; display: flex; justify-content: center; }
+  .preview-scroll::-webkit-scrollbar { width: 6px; }
+  .preview-scroll::-webkit-scrollbar-thumb { background: #b0bec5; border-radius: 3px; }
+
+  /* ── CV DOCUMENT ── */
+  /* All grids must respect their container width */
+  .cv-doc * { min-width: 0; }
+  .cv-doc { background:#fff;width:820px;max-width:100%;padding:28px 32px;box-shadow:0 4px 32px rgba(0,0,0,.18);font-family:Arial,Helvetica,sans-serif;font-size:10pt;line-height:1.32;color:#1a1a1a; }
+
+
+  /* CV Header */
+  .cv-header { border-bottom: 2px solid #1a3a5c; padding-bottom: 10px; margin-bottom: 12px; }
+  .cv-name { font-size: 19pt; font-weight: 700; color: #1a3a5c; text-transform: uppercase; letter-spacing: 0.5px; }
+  .cv-role { font-size: 9.5pt; font-weight: 600; color: #2e6da4; margin-top: 1px; text-transform: uppercase; letter-spacing: 1px; }
+  .cv-contacts { margin-top: 6px; font-size: 8.5pt; color: #333; display: flex; flex-wrap: wrap; gap: 3px 16px; }
+  .cv-contacts a { color: #1a3a5c; text-decoration: none; }
+
+  /* CV Sections */
+  .cv-section { margin-bottom: 9px; }
+  .cv-section-title { font-size:9pt;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#1a3a5c;border-bottom:1px solid #c0cfe0;padding-bottom:3px;margin-bottom:8px; }
+
+  .cv-summary { font-size: 9.5pt; line-height: 1.4; }
+
+  /* Skills grid */
+  .cv-skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 24px; }
+  .cv-skill::before { content: "▪ "; color: #1a3a5c; }
+  .cv-skill { font-size: 9pt; }
+
+  /* Job */
+  .cv-job { margin-bottom: 8px; }
+  .cv-job:last-child { margin-bottom: 0; }
+  .cv-job-header { display:flex;justify-content:space-between;align-items:flex-start;gap:16px; }
+  .cv-job-left { flex: 1; min-width: 0; }
+  .cv-job-title { font-size:9.5pt;font-weight:700;color:#111;line-height:1.2; }
+  .cv-job-company { font-size:8.8pt;color:#2e6da4;font-weight:600;margin-top:1px; }
+  .cv-job-date { font-size:8.5pt;color:#444;font-weight:600;white-space:nowrap;flex-shrink:0;padding-top:2px;min-width:140px;text-align:right; }
+  .cv-ul { margin-top:2px;padding-left:18px; }
+  .cv-ul li { font-size:9pt;margin-bottom:1px;line-height:1.3;color:#222; }
+
+  /* Certs grid */
+  .cv-certs-grid { display:flex;flex-direction:column;gap:2px; }
+  .cv-cert { display:grid;grid-template-columns:1fr 100px;align-items:start;gap:12px;padding:3px 0;border-bottom:1px dotted #dde4ec; }
+  .cv-cert-name { font-weight:600;color:#111;line-height:1.25;overflow-wrap:break-word; }
+  .cv-cert-date { font-size:8.5pt;color:#444;font-weight:600;text-align:right;white-space:nowrap; }
+
+  .cv-edu-degree { font-weight: 700; font-size: 9.5pt; }
+  .cv-edu-school { font-size: 9pt; color: #2e6da4; font-weight: 600; }
+
+  .cv-bottom-row { display:grid;grid-template-columns:280px 1fr;gap:28px;align-items:start; }
+  .cv-bottom-row > .cv-section { min-width: 0; }
+  .cv-lang { font-size:9pt;line-height:1.45;margin-bottom:4px; }
+
+  /* Skills grid inside bottom-row must not overflow */
+  .cv-bottom-row .cv-skills-grid { display:grid;grid-template-columns:1fr;gap:3px; }
+  .cv-bottom-row .cv-skill { line-height:1.35;word-break:break-word; }
+
+  /* empty state */
+  .cv-empty { color: #aaa; font-style: italic; font-size: 9pt; }
+
+  /* ── JSON PANEL ── */
+  .json-panel {
+    flex: 1; overflow: hidden;
+    display: flex; flex-direction: column;
+    background: var(--navy);
+  }
+  .json-toolbar { padding: 8px 16px; background: var(--navy-mid); display: flex; align-items: center; gap: 10px; }
+  .json-toolbar span { color: #94a3b8; font-size: 12px; flex: 1; }
+  .json-scroll { flex: 1; overflow-y: auto; padding: 20px; }
+  .json-scroll pre {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: #7dd3fc;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+  .json-string { color: #86efac; }
+  .json-number { color: #fbbf24; }
+  .json-key { color: #7dd3fc; }
+  .json-bool { color: #f9a8d4; }
+
+  /* ── MODAL ── */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 200; display: flex; align-items: center; justify-content: center; }
+  .modal { background: var(--surface); border-radius: 12px; padding: 24px; width: 500px; max-height: 80vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+  .modal h3 { font-size: 16px; font-weight: 700; margin-bottom: 16px; color: var(--navy); }
+  .modal textarea { width: 100%; height: 280px; font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 12px; border: 1.5px solid var(--border); border-radius: 8px; outline: none; resize: vertical; }
+  .modal textarea:focus { border-color: var(--teal); }
+  .modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 14px; }
+  .modal-error { color: var(--danger); font-size: 12px; margin-top: 8px; }
+
+  /* toast */
+  .toast {
+    position: fixed; bottom: 24px; right: 24px;
+    background: var(--navy); color: #fff;
+    padding: 12px 18px; border-radius: 8px;
+    font-size: 13px; font-weight: 500;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+    z-index: 300; display: flex; align-items: center; gap: 8px;
+    animation: slideUp .25s ease;
+  }
+
+  /* Inputs que no usan el componente Field */
+  .form-group-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    margin-bottom: 6px;
+  }
+
+  .skill-row,
+  .bullet-row {
+    margin-bottom: 8px;
+  }
+
+  .skill-row input,
+  .bullet-row input {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    font-size: 13px;
+    font-family: inherit;
+    color: var(--text);
+    background: var(--surface);
+    outline: none;
+    transition: all .15s;
+  }
+
+  .skill-row input:focus,
+  .bullet-row input:focus {
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px var(--teal-glow);
+  }
+
+  /* Harvard style date format */
+  .harvard-doc { width:210mm;min-height:297mm;background:#fff;padding:18mm 20mm;font-family:"Times New Roman",serif;font-size:11pt;line-height:1.35;color:#000; }
+
+.harvard-name { font-size:24px;font-weight:700;text-align:center;margin-bottom:4px; }
+
+.harvard-divider { border-top:1px solid #000;margin-bottom:6px; }
+
+.harvard-contact { text-align:center;font-size:10pt;margin-bottom:2px; }
+
+.harvard-links { text-align:center;font-size:10pt;margin-bottom:16px; }
+
+.harvard-section { margin-bottom:16px; }
+
+.harvard-title { text-align:center;font-weight:700;margin-bottom:8px;font-size:12pt; }
+
+.harvard-row { display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:2px; }
+
+.harvard-job { margin-bottom:14px; }
+
+.harvard-ul { margin:4px 0 0 18px;padding:0; }
+
+.harvard-ul li { margin-bottom:2px;line-height:1.3; }
+
+
+  @keyframes slideUp { from { transform: translateY(16px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+  @page { margin: 16mm 12mm; size: letter; }
+
+  @media print {
+    body { background: #fff !important; margin: 0; padding: 0; }
+    .topbar, .preview-panel > .preview-toolbar,
+    .editor-panel, .json-panel, .modal-overlay, .toast { display: none !important; }
+
+    .app-body { display: block !important; height: auto !important; overflow: visible !important; }
+    .preview-panel { display: block !important; overflow: visible !important; background: none !important; }
+    .preview-scroll { display: block !important; overflow: visible !important; padding: 0 !important; }
+
+    .cv-doc {
+      width: 100% !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+
+    /* Avoid breaking inside these blocks across pages */
+    .cv-section  { break-inside: avoid; page-break-inside: avoid; }
+    .cv-job      { break-inside: avoid; page-break-inside: avoid; }
+    .cv-cert     { break-inside: avoid; page-break-inside: avoid; }
+    .cv-bottom-row { break-inside: avoid; page-break-inside: avoid; }
+    .cv-certs-grid { break-inside: avoid; page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+const { useState, useCallback, useRef, useEffect } = React;
+
+// ── DEFAULT EMPTY STATE ──
+const EMPTY_CV = {
+  personal: { name: '', role: '', email: '', phone: '', location: '', linkedin: '', github: '', portfolio: '' },
+  summary: '',
+  skills: [],
+  experience: [],
+  projects: [],
+  education: { degree: '', school: '', location: '' },
+  certifications: [],
+  languages: [],
+  softSkills: [],
+  template:'standard'
+};
+
+// ── SAMPLE DATA (Andres' CV) ──
+const SAMPLE_CV = {
+  template:'standard',
+  personal: { name: 'Andres Escala', role: 'Full Stack Developer', email: 'andres.escala.344@gmail.com', phone: '+52 5545464585', location: 'Mexico City, Mexico', linkedin: 'linkedin.com/in/escalandres', github: 'github.com/escalandres', portfolio: 'escalandres-portfolio.vercel.app' },
+  summary: 'Full Stack Developer with 3+ years of experience building scalable web applications and RESTful APIs using .NET, Node.js, and Express.js. Skilled in React.js, TypeScript, SQL Server, and MongoDB. Hands-on experience customizing Oracle NetSuite ERP via SuiteScript 2.0 and building SOAP/REST integrations. Holds 5 active certifications in Oracle Cloud and Microsoft Azure. Fluent in English (B2) and Spanish (native).',
+  skills: ['HTML5, CSS3, JavaScript (ES6+), TypeScript','React.js, Node.js, Express.js, jQuery, EJS','C#, .NET Framework, ASP.NET, .NET Core 6/8','SQL Server, MySQL, MongoDB – query optimization','SuiteScript 2.0: Suitelet, RESTlet, Map/Reduce, Workflow','RESTful APIs, SOAP integrations, Oracle NetSuite ERP','Git, GitHub, Azure, Netlify, GitHub Pages','Linux: Ubuntu, CentOS 7 – server administration'],
+  experience: [
+    { id: 1, title: 'Technical Consultant', company: 'Oracle NetSuite', location: 'Mexico City, Mexico', startDate: 'Aug 2024', endDate: 'Present', bullets: ['Implement ERP solutions using SuiteScript 2.0 (Suitelets, Clientscripts, Map/Reduce, RESTlets, Workflows, User Events).','Develop NetSuite localization customizations for Mexico, Colombia, and Brazil SuiteApps.','Build RESTful and SOAP API integrations between NetSuite and third-party systems.','Developed .NET desktop tools that reduced internal account setup time by 30%.','Create technical documentation and manuals that improve cross-team workflows and onboarding speed.'] },
+    { id: 2, title: 'Web Developer Intern', company: 'INFO100 S.A DE C.V', location: 'Mexico City, Mexico', startDate: 'Nov 2022', endDate: 'Aug 2024', bullets: ['Built web applications with ASP.NET Framework 4.6, .NET Core 6/8, JavaScript, jQuery, Ajax, and Bootstrap.','Maintained desktop applications in .NET Framework 4.6 and Visual Basic; administered CentOS 7 Linux servers.','Developed internal automation tools and backend services in .NET and SQL Server.'] }
+  ],
+  projects: [
+    { id: 1, title: 'PLD_WEB – Anti-Money Laundering Platform', tech: 'ASP.NET Framework · Bootstrap 4 · SQL Server', startDate: 'Nov 2022', endDate: 'Nov 2023', bullets: ['Web app for detecting and preventing money laundering in microfinance companies.'] },
+    { id: 2, title: 'CONDUSEF Management – Regulatory Complaints Platform', tech: 'ASP.NET · SQL Server', startDate: 'Dec 2023', endDate: 'Jul 2024', bullets: ['Streamlined upload of complaints and clarifications to the CONDUSEF financial regulatory entity.'] }
+  ],
+  education: { degree: 'Bachelor of Telematics Engineering', school: 'Instituto Politécnico Nacional (IPN)', location: 'Mexico City, Mexico' },
+  certifications: [
+    { id: 1, name: 'Oracle Cloud Infrastructure 2025 Certified Generative AI Professional', date: 'Jan 2026' },
+    { id: 2, name: 'Oracle NetSuite SuiteFoundation Specialist', date: 'Dec 2025' },
+    { id: 3, name: 'Oracle Cloud Infrastructure 2025 Certified AI Foundations Associate', date: 'Dec 2025' },
+    { id: 4, name: 'Oracle NetSuite Certified AI Foundations Associate', date: 'Nov 2025' },
+    { id: 5, name: 'Microsoft Certified: Azure Fundamentals (AZ-900)', date: 'Feb 2022' }
+  ],
+  languages: [{ id: 1, name: 'English', level: 'B2 Upper Intermediate' }, { id: 2, name: 'Spanish', level: 'Native' }],
+  softSkills: ['Leadership','Planning & Coordination','Teamwork & Collaboration','Conflict Resolution','Creativity & Problem Solving','Continuous Learning','Interpersonal Communication']
+};
+
+const LANGUAGES = [
+  '',
+  'English',
+  'Spanish',
+  'French',
+  'German',
+  'Italian',
+  'Portuguese',
+  'Mandarin Chinese',
+  'Japanese',
+  'Korean',
+  'Dutch',
+  'Russian',
+  'Arabic'
+];
+
+const LANGUAGE_LEVELS = [
+  '',
+  'A1 - Beginner',
+  'A2 - Elementary',
+  'B1 - Intermediate',
+  'B2 - Upper Intermediate',
+  'C1 - Advanced',
+  'C2 - Proficient',
+  'Native'
+];
+
+const CV_TEMPLATES = [
+  {value:'standard',label:'Standard'},
+  {value:'harvard',label:'Harvard'}
+];
+
+let nextId = 100;
+const uid = () => ++nextId;
+
+// ── HELPERS ──
+function syntaxHighlight(json) {
+  return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, (match) => {
+    let cls = 'json-number';
+    if (/^"/.test(match)) cls = /:$/.test(match) ? 'json-key' : 'json-string';
+    else if (/true|false/.test(match)) cls = 'json-bool';
+    return `<span class="${cls}">${match}</span>`;
+  });
+}
+
+// ── SUB-COMPONENTS ──
+function SectionCard({ icon, title, children, defaultOpen = true }) {
+  const [open, setOpen] = useState(defaultOpen);
+  return (
+    <div className="section-card">
+      <div className="section-header" onClick={() => setOpen(!open)}>
+        <span className="section-icon">{icon}</span>
+        <span className="section-title">{title}</span>
+        <span className={`section-chevron ${open ? 'open' : ''}`}>▼</span>
+      </div>
+      {open && <div className="section-body">{children}</div>}
+    </div>
+  );
+}
+
+function Field({ label, children, className = '' }) {
+  return (
+    <div className={`field ${className}`}>
+      <label>{label}</label>
+      {children}
+    </div>
+  );
+}
+
+function BulletEditor({ bullets, onChange }) {
+  const update = (i, val) => { const n = [...bullets]; n[i] = val; onChange(n); };
+  const add = () => onChange([...bullets, '']);
+  const remove = (i) => onChange(bullets.filter((_, j) => j !== i));
+  return (
+    <div className="bullet-list">
+      {bullets.map((b, i) => (
+        <div key={i} className="bullet-row">
+          <input value={b} onChange={e => update(i, e.target.value)} placeholder="Describe an achievement or responsibility..." />
+          <button className="btn-icon" onClick={() => remove(i)} title="Remove">✕</button>
+        </div>
+      ))}
+      <button className="btn-add" onClick={add}>＋ Add bullet</button>
+    </div>
+  );
+}
+
+function HeaderSection({ personal }) {
+  return (
+    <div className="cv-header">
+      <div className="cv-name">{personal.name || 'Your Name'}</div>
+      {personal.role && <div className="cv-role">{personal.role}</div>}
+
+      <div className="cv-contacts">
+        {personal.email && <span>{personal.email}</span>}
+        {personal.phone && <span>{personal.phone}</span>}
+        {personal.location && <span>{personal.location}</span>}
+        {personal.linkedin && <a href={`https://${personal.linkedin}`}>{personal.linkedin}</a>}
+        {personal.github && <a href={`https://${personal.github}`}>{personal.github}</a>}
+        {personal.portfolio && <a href={`https://${personal.portfolio}`}>{personal.portfolio}</a>}
+      </div>
+    </div>
+  );
+}
+
+function SummarySection({ summary }) {
+  return (
+    <div className="cv-section">
+      <div className="cv-section-title">Professional Summary</div>
+      <div className="cv-summary">{summary}</div>
+    </div>
+  );
+}
+
+function SkillsSection({ skills }) {
+  return (
+    <div className="cv-section">
+      <div className="cv-section-title">Technical Skills</div>
+
+      <div className="cv-skills-grid">
+        {skills.map((s,i) => (
+          <div key={i} className="cv-skill">{s}</div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ExperienceSection({ experience }) {
+  return (
+    <div className="cv-section">
+      <div className="cv-section-title">
+        Work Experience
+      </div>
+
+      {experience.map(job => (
+        <div key={job.id} className="cv-job">
+          <div className="cv-job-header">
+            <div className="cv-job-left">
+              <div className="cv-job-title">
+                {job.title || 'Job Title'}
+              </div>
+              <div className="cv-job-company">
+                {[job.company,job.location].filter(Boolean).join(' · ')}
+              </div>
+            </div>
+            <div className="cv-job-date">
+              {[job.startDate,job.endDate].filter(Boolean).join(' – ')}
+            </div>
+          </div>
+
+          {job.bullets.filter(Boolean).length > 0 && (
+            <ul className="cv-ul">
+              {job.bullets.filter(Boolean).map((b,i) => (
+                <li key={i}>{b}</li>
+              ))}
+            </ul>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function ProjectsSection({ projects }) {
+  return (
+    <div className="cv-section">
+      <div className="cv-section-title">
+        Projects
+      </div>
+      {projects.map(project => (
+        <div key={project.id} className="cv-job">
+          <div className="cv-job-header">
+            <div className="cv-job-left">
+              <div className="cv-job-title">
+                {project.title}
+              </div>
+              <div className="cv-job-company">
+                {project.tech}
+              </div>
+            </div>
+            <div className="cv-job-date">
+              {[project.startDate,project.endDate].filter(Boolean).join(' – ')}
+            </div>
+          </div>
+          {project.bullets.filter(Boolean).length > 0 && (
+            <ul className="cv-ul">
+              {project.bullets.filter(Boolean).map((b,i) => (
+                <li key={i}>{b}</li>
+              ))}
+            </ul>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function EducationSection({ education }) {
+  return (
+    <div className="cv-section">
+      <div className="cv-section-title">
+        Education
+      </div>
+      <div className="cv-edu-degree">
+        {education.degree}
+      </div>
+      <div className="cv-edu-school">
+        {[education.school,education.location].filter(Boolean).join(' · ')}
+      </div>
+    </div>
+  );
+}
+
+function CertificationsSection({ certifications }) {
+  return (
+    <div className="cv-section">
+      <div className="cv-section-title">
+        Certifications
+      </div>
+      <div className="cv-certs-grid">
+        {certifications.map(cert => (
+          <div key={cert.id} className="cv-cert">
+            <div className="cv-cert-name">
+              {cert.name}
+            </div>
+            <div className="cv-cert-date">
+              {cert.date}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function BottomSection({ languages, softSkills }) {
+  return (
+    <div className="cv-bottom-row">
+      <div className="cv-section">
+        <div className="cv-section-title">
+          Languages
+        </div>
+        {languages.map(lang => (
+          <div key={lang.id} className="cv-lang">
+            <strong>{lang.name}</strong>
+            {' · '}
+            {lang.level}
+          </div>
+        ))}
+      </div>
+
+      <div className="cv-section">
+        <div className="cv-section-title">
+          Soft Skills
+        </div>
+        <div className="cv-skills-grid">
+          {softSkills.map((s,i) => (
+            <div key={i} className="cv-skill">{s}</div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── CV PREVIEW ──
+function CVPreview({ cv }) {
+
+  if (cv.template === 'harvard') {
+
+    return (
+      <HarvardCV cv={cv} />
+    );
+
+  }
+
+  const {
+    personal,
+    summary,
+    skills,
+    experience,
+    projects,
+    education,
+    certifications,
+    languages,
+    softSkills
+  } = cv;
+
+  const page1 = [];
+  const page2 = [];
+
+  page1.push('header');
+
+  if (summary) page1.push('summary');
+  if (skills.length) page1.push('skills');
+  if (experience.length) page1.push('experience');
+
+  if (projects.length <= 2) {
+    page1.push('projects');
+  } else {
+    page2.push('projects');
+  }
+
+  if (education.degree || education.school) page2.push('education');
+  if (certifications.length) page2.push('certifications');
+  if (languages.length || softSkills.length) page2.push('bottom');
+
+  return (
+    <div className="cv-pages">
+
+      <div className="cv-doc">
+        <HeaderSection personal={personal} />
+
+        {summary && <SummarySection summary={summary} />}
+
+        {skills.length > 0 && <SkillsSection skills={skills} />}
+
+        {experience.length > 0 && (
+          <ExperienceSection experience={experience} />
+        )}
+
+        {projects.length > 0 && projects.length <= 2 && (
+          <ProjectsSection projects={projects} />
+        )}
+      </div>
+
+      {(page2.length > 0 || projects.length > 2) && (
+        <div className="cv-doc">
+
+          {projects.length > 2 && (
+            <ProjectsSection projects={projects} />
+          )}
+
+          {(education.degree || education.school) && (
+            <EducationSection education={education} />
+          )}
+
+          {certifications.length > 0 && (
+            <CertificationsSection certifications={certifications} />
+          )}
+
+          {(languages.length > 0 || softSkills.length > 0) && (
+            <BottomSection
+              languages={languages}
+              softSkills={softSkills}
+            />
+          )}
+        </div>
+      )}
+    </div>
+  );
+
+}
+
+function HarvardCV({ cv }) {
+  const {
+    personal,
+    summary,
+    skills,
+    experience,
+    education,
+    certifications,
+    languages,
+    softSkills
+  } = cv;
+
+  return (
+    <div className="cv-doc harvard-doc">
+      <div className="harvard-name">
+        {personal.name || 'Your Name'}
+      </div>
+      <div className="harvard-divider"></div>
+      <div className="harvard-contact">
+        {[
+          personal.location,
+          personal.email,
+          personal.phone
+        ].filter(Boolean).join(' • ')}
+      </div>
+
+      {(personal.linkedin || personal.github || personal.portfolio) && (
+        <div className="harvard-links">
+          {[
+            personal.linkedin,
+            personal.github,
+            personal.portfolio
+          ].filter(Boolean).join(' • ')}
+        </div>
+      )}
+
+      {education.degree && (
+        <div className="harvard-section">
+          <div className="harvard-title">
+            Education
+          </div>
+          <div className="harvard-row">
+            <strong>
+              {education.school}
+            </strong>
+            <span>
+              {education.location}
+            </span>
+          </div>
+          <div className="harvard-row">
+            <span>
+              {education.degree}
+            </span>
+            <span>
+              {education.graduation}
+            </span>
+          </div>
+        </div>
+      )}
+
+      {experience.length > 0 && (
+        <div className="harvard-section">
+          <div className="harvard-title">
+            Experience
+          </div>
+
+          {experience.map(job => (
+            <div key={job.id} className="harvard-job">
+              <div className="harvard-row">
+                <strong>
+                  {job.company}
+                </strong>
+                <span>
+                  {job.location}
+                </span>
+              </div>
+              <div className="harvard-row">
+                <strong>
+                  {job.title}
+                </strong>
+                <span>
+                  {[job.startDate,job.endDate]
+                    .filter(Boolean)
+                    .join(' – ')}
+                </span>
+              </div>
+              <ul className="harvard-ul">
+                {job.bullets
+                  .filter(Boolean)
+                  .map((b,i) => (
+                    <li key={i}>{b}</li>
+                  ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {(skills.length || languages.length || softSkills.length || certifications.length) && (
+        <div className="harvard-section">
+          <div className="harvard-title">
+            Skills & Interests
+          </div>
+          {skills.length > 0 && (
+            <p>
+              <strong>
+                Technical:
+              </strong>
+              {' '}
+              {skills.join(', ')}
+            </p>
+          )}
+          {languages.length > 0 && (
+            <p>
+              <strong>
+                Languages:
+              </strong>
+              {' '}
+              {languages
+                .map(l => `${l.name} (${l.level})`)
+                .join(', ')}
+            </p>
+          )}
+          {softSkills.length > 0 && (
+            <p>
+              <strong>
+                Soft Skills:
+              </strong>
+              {' '}
+              {softSkills.join(', ')}
+            </p>
+          )}
+          {certifications.length > 0 && (
+            <p>
+              <strong>
+                Certifications:
+              </strong>
+              {' '}
+              {certifications
+                .map(c => c.name)
+                .join(', ')}
+            </p>
+          )}
+        </div>
+      )}
+      {summary && (
+        <div className="harvard-section">
+          <div className="harvard-title">
+            Professional Summary
+          </div>
+          <p>
+            {summary}
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ── MAIN APP ──
+function App() {
+  const [cv, setCV] = useState(EMPTY_CV);
+  const [activeTab, setActiveTab] = useState('editor'); // editor | preview | json
+  const [showImportModal, setShowImportModal] = useState(false);
+  const [importText, setImportText] = useState('');
+  const [importError, setImportError] = useState('');
+  const [toast, setToast] = useState(null);
+  const fileInputRef = useRef();
+
+  const showToast = (msg, icon = '✓') => {
+    setToast({ msg, icon });
+    setTimeout(() => setToast(null), 2800);
+  };
+
+  // Personal
+  const setPersonal = (field, val) => setCV(c => ({ ...c, personal: { ...c.personal, [field]: val } }));
+  // Summary
+  const setSummary = (val) => setCV(c => ({ ...c, summary: val }));
+
+  // Skills
+  const setSkill = (i, val) => setCV(c => { const s = [...c.skills]; s[i] = val; return { ...c, skills: s }; });
+  const addSkill = () => setCV(c => ({ ...c, skills: [...c.skills, ''] }));
+  const removeSkill = (i) => setCV(c => ({ ...c, skills: c.skills.filter((_, j) => j !== i) }));
+
+  // Experience
+  const addExp = () => setCV(c => ({ ...c, experience: [...c.experience, { id: uid(), title: '', company: '', location: '', startDate: '', endDate: '', bullets: [''] }] }));
+  const removeExp = (id) => setCV(c => ({ ...c, experience: c.experience.filter(e => e.id !== id) }));
+  const setExp = (id, field, val) => setCV(c => ({ ...c, experience: c.experience.map(e => e.id === id ? { ...e, [field]: val } : e) }));
+  const setExpBullets = (id, bullets) => setCV(c => ({ ...c, experience: c.experience.map(e => e.id === id ? { ...e, bullets } : e) }));
+
+  // Projects
+  const addProj = () => setCV(c => ({ ...c, projects: [...c.projects, { id: uid(), title: '', tech: '', startDate: '', endDate: '', bullets: [''] }] }));
+  const removeProj = (id) => setCV(c => ({ ...c, projects: c.projects.filter(p => p.id !== id) }));
+  const setProj = (id, field, val) => setCV(c => ({ ...c, projects: c.projects.map(p => p.id === id ? { ...p, [field]: val } : p) }));
+  const setProjBullets = (id, bullets) => setCV(c => ({ ...c, projects: c.projects.map(p => p.id === id ? { ...p, bullets } : p) }));
+
+  // Education
+  const setEdu = (field, val) => setCV(c => ({ ...c, education: { ...c.education, [field]: val } }));
+
+  // Certifications
+  const addCert = () => setCV(c => ({ ...c, certifications: [...c.certifications, { id: uid(), name: '', date: '' }] }));
+  const removeCert = (id) => setCV(c => ({ ...c, certifications: c.certifications.filter(x => x.id !== id) }));
+  const setCert = (id, field, val) => setCV(c => ({ ...c, certifications: c.certifications.map(x => x.id === id ? { ...x, [field]: val } : x) }));
+
+  // Languages
+  const addLang = () => setCV(c => ({ ...c, languages: [...c.languages, { id: uid(), name: '', level: '' }] }));
+  const removeLang = (id) => setCV(c => ({ ...c, languages: c.languages.filter(x => x.id !== id) }));
+  const setLang = (id, field, val) => setCV(c => ({ ...c, languages: c.languages.map(x => x.id === id ? { ...x, [field]: val } : x) }));
+
+  // Soft skills
+  const setSoftSkill = (i, val) => setCV(c => { const s = [...c.softSkills]; s[i] = val; return { ...c, softSkills: s }; });
+  const addSoftSkill = () => setCV(c => ({ ...c, softSkills: [...c.softSkills, ''] }));
+  const removeSoftSkill = (i) => setCV(c => ({ ...c, softSkills: c.softSkills.filter((_, j) => j !== i) }));
+
+  // Export JSON
+  const exportJSON = () => {
+    const blob = new Blob([JSON.stringify(cv, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = `${cv.personal.name.replace(/\s+/g, '_') || 'cv'}.json`;
+    a.click(); URL.revokeObjectURL(url);
+    showToast('JSON exported successfully', '📥');
+  };
+
+  // Import JSON
+  const openImport = () => { setImportText(''); setImportError(''); setShowImportModal(true); };
+  const doImport = () => {
+    try {
+      const parsed = JSON.parse(importText);
+      if (!parsed.personal) throw new Error('Invalid CV JSON: missing "personal" field.');
+      setCV({ ...EMPTY_CV, ...parsed });
+      setShowImportModal(false);
+      showToast('CV imported successfully', '📤');
+    } catch(e) { setImportError(e.message); }
+  };
+
+  // Import from file
+  const handleFile = (e) => {
+    const file = e.target.files[0]; if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      try {
+        const parsed = JSON.parse(ev.target.result);
+        if (!parsed.personal) throw new Error('Invalid CV JSON file.');
+        setCV({ ...EMPTY_CV, ...parsed });
+        showToast('File imported successfully', '📂');
+      } catch(err) { showToast('Error: ' + err.message, '⚠️'); }
+    };
+    reader.readAsText(file);
+    e.target.value = '';
+  };
+
+  // Print PDF
+  const printPDF = () => {
+    setActiveTab('preview');
+    setTimeout(() => window.print(), 300);
+  };
+
+  // Load sample
+  const loadSample = () => { setCV(SAMPLE_CV); showToast('Sample CV loaded', '✨'); };
+  const clearAll = () => { if (confirm('Clear all data?')) { setCV(EMPTY_CV); showToast('Cleared', '🗑'); } };
+
+  const jsonStr = JSON.stringify(cv, null, 2);
+
+  return (
+    <div>
+      {/* TOPBAR */}
+      <div className="topbar">
+        <div className="topbar-logo">
+          <img src="cv-builder-favicon.svg" alt="CV Builder" /> CV<span>Builder</span>
+        </div>
+        <div className="topbar-tabs">
+          {['editor','preview','json'].map(t => (
+            <button key={t} className={`tab-btn ${activeTab === t ? 'active' : ''}`} onClick={() => setActiveTab(t)}>
+              {t === 'editor' ? '✏️ Editor' : t === 'preview' ? '👁 Preview' : '{ } JSON'}
+            </button>
+          ))}
+        </div>
+        <div className="topbar-spacer" />
+        <div className="topbar-actions">
+          <button className="btn btn-ghost" onClick={loadSample}>✨ Sample</button>
+          <button className="btn btn-ghost" onClick={openImport}>📤 Import JSON</button>
+          <input ref={fileInputRef} type="file" accept=".json" style={{display:'none'}} onChange={handleFile} />
+          <button className="btn btn-ghost" onClick={() => fileInputRef.current.click()}>📂 Open File</button>
+          <button className="btn btn-ghost" onClick={exportJSON}>📥 Export JSON</button>
+          <button className="btn btn-teal" onClick={printPDF}>🖨 Export PDF</button>
+        </div>
+      </div>
+
+      {/* APP BODY */}
+      <div className="app-body">
+
+        {/* EDITOR (always mounted, hidden via CSS when not active) */}
+        <div className="editor-panel" style={{ display: activeTab === 'editor' ? 'flex' : 'none' }}>
+          <div className="editor-scroll">
+
+            <SectionCard icon="📄" title="CV Format">
+              <Field label="Template">
+                <select
+                  value={cv.template}
+                  onChange={e => setCV({
+                    ...cv,
+                    template:e.target.value
+                  })}
+                >
+                  <option value="standard">
+                    Standard
+                  </option>
+                  <option value="harvard">
+                    Harvard
+                  </option>
+                </select>
+              </Field>
+            </SectionCard>
+
+            {/* Personal */}
+            <SectionCard icon="👤" title="Personal Info">
+              <div className="field-row">
+                <Field label="Full Name"><input value={cv.personal.name} onChange={e => setPersonal('name', e.target.value)} placeholder="Jane Smith" /></Field>
+                <Field label="Job Title / Role"><input value={cv.personal.role} onChange={e => setPersonal('role', e.target.value)} placeholder="Full Stack Developer" /></Field>
+              </div>
+              <div className="field-row">
+                <Field label="Email"><input value={cv.personal.email} onChange={e => setPersonal('email', e.target.value)} placeholder="email@example.com" /></Field>
+                <Field label="Phone"><input value={cv.personal.phone} onChange={e => setPersonal('phone', e.target.value)} placeholder="+1 234 567 8900" /></Field>
+              </div>
+              <Field label="Location"><input value={cv.personal.location} onChange={e => setPersonal('location', e.target.value)} placeholder="City, Country" /></Field>
+              <Field label="LinkedIn (without https://)"><input value={cv.personal.linkedin} onChange={e => setPersonal('linkedin', e.target.value)} placeholder="linkedin.com/in/yourprofile" /></Field>
+              <Field label="GitHub (without https://)"><input value={cv.personal.github} onChange={e => setPersonal('github', e.target.value)} placeholder="github.com/yourusername" /></Field>
+              <Field label="Portfolio (without https://)"><input value={cv.personal.portfolio} onChange={e => setPersonal('portfolio', e.target.value)} placeholder="yourportfolio.com" /></Field>
+            </SectionCard>
+
+            {/* Summary */}
+            <SectionCard icon="📝" title="Professional Summary">
+              <Field label="Summary">
+                <textarea value={cv.summary} onChange={e => setSummary(e.target.value)} placeholder="Write a concise 2–4 sentence summary highlighting your experience, key skills, and what makes you stand out..." rows={5} />
+              </Field>
+            </SectionCard>
+
+            {/* Technical Skills */}
+            <SectionCard icon="⚙️" title="Technical Skills">
+              <Field label="Technical Skills">
+                {cv.skills.map((s, i) => (
+                  <div key={i} className="skill-row">
+                    <input
+                      value={s}
+                      onChange={e => setSkill(i, e.target.value)}
+                      placeholder="e.g. React.js, Node.js, TypeScript"
+                    />
+                    <button
+                      className="btn-icon"
+                      onClick={() => removeSkill(i)}
+                    >
+                      ✕
+                    </button>
+                  </div>
+                ))}
+
+                <button className="btn-add" onClick={addSkill}>
+                  ＋ Add skill group
+                </button>
+              </Field>
+            </SectionCard>
+
+            {/* Experience */}
+            <SectionCard icon="💼" title="Work Experience">
+              {cv.experience.map(job => (
+                <div key={job.id} className="list-item">
+                  <div className="list-item-header">
+                    <div style={{flex:1}}>
+                      <div className="list-item-title">{job.title || 'New Position'}</div>
+                      <div className="list-item-sub">{job.company}</div>
+                    </div>
+                    <button className="btn-icon" onClick={() => removeExp(job.id)}>✕</button>
+                  </div>
+                  <div className="field-row">
+                    <Field label="Job Title"><input value={job.title} onChange={e => setExp(job.id, 'title', e.target.value)} placeholder="Software Engineer" /></Field>
+                    <Field label="Company"><input value={job.company} onChange={e => setExp(job.id, 'company', e.target.value)} placeholder="Acme Corp" /></Field>
+                  </div>
+                  <Field label="Location"><input value={job.location} onChange={e => setExp(job.id, 'location', e.target.value)} placeholder="City, Country" /></Field>
+                  <div className="field-row">
+                    <Field label="Start Date"><input value={job.startDate} onChange={e => setExp(job.id, 'startDate', e.target.value)} placeholder="Jan 2022" /></Field>
+                    <Field label="End Date"><input value={job.endDate} onChange={e => setExp(job.id, 'endDate', e.target.value)} placeholder="Present" /></Field>
+                  </div>
+                  <label className="form-group-label">
+                    Achievements / Responsibilities
+                  </label>
+                  <BulletEditor bullets={job.bullets} onChange={b => setExpBullets(job.id, b)} />
+                </div>
+              ))}
+              <button className="btn-add" onClick={addExp}>＋ Add position</button>
+            </SectionCard>
+
+            {/* Projects */}
+            <SectionCard icon="🚀" title="Projects">
+              {cv.projects.map(p => (
+                <div key={p.id} className="list-item">
+                  <div className="list-item-header">
+                    <div style={{flex:1}}>
+                      <div className="list-item-title">{p.title || 'New Project'}</div>
+                      <div className="list-item-sub">{p.tech}</div>
+                    </div>
+                    <button className="btn-icon" onClick={() => removeProj(p.id)}>✕</button>
+                  </div>
+                  <Field label="Project Title"><input value={p.title} onChange={e => setProj(p.id, 'title', e.target.value)} placeholder="My Awesome Project" /></Field>
+                  <Field label="Tech Stack"><input value={p.tech} onChange={e => setProj(p.id, 'tech', e.target.value)} placeholder="React · Node.js · PostgreSQL" /></Field>
+                  <div className="field-row">
+                    <Field label="Start Date"><input value={p.startDate} onChange={e => setProj(p.id, 'startDate', e.target.value)} placeholder="Mar 2023" /></Field>
+                    <Field label="End Date"><input value={p.endDate} onChange={e => setProj(p.id, 'endDate', e.target.value)} placeholder="Jun 2023" /></Field>
+                  </div>
+                  <label className="form-group-label">
+                    Description
+                  </label>
+                  <BulletEditor bullets={p.bullets} onChange={b => setProjBullets(p.id, b)} />
+                </div>
+              ))}
+              <button className="btn-add" onClick={addProj}>＋ Add project</button>
+            </SectionCard>
+
+            {/* Education */}
+            <SectionCard icon="🎓" title="Education">
+              <Field label="Degree / Program"><input value={cv.education.degree} onChange={e => setEdu('degree', e.target.value)} placeholder="Bachelor of Computer Science" /></Field>
+              <Field label="School / University"><input value={cv.education.school} onChange={e => setEdu('school', e.target.value)} placeholder="MIT" /></Field>
+              <Field label="Location"><input value={cv.education.location} onChange={e => setEdu('location', e.target.value)} placeholder="Cambridge, MA, USA" /></Field>
+            </SectionCard>
+
+            {/* Certifications */}
+            <SectionCard icon="🏅" title="Certifications">
+              {cv.certifications.map(c => (
+                <div key={c.id} className="list-item">
+                  <div className="list-item-header">
+                    <div className="list-item-title" style={{flex:1}}>{c.name || 'New Certification'}</div>
+                    <button className="btn-icon" onClick={() => removeCert(c.id)}>✕</button>
+                  </div>
+                  <div className="field-row">
+                    <Field label="Certification Name"><input value={c.name} onChange={e => setCert(c.id, 'name', e.target.value)} placeholder="AWS Solutions Architect" /></Field>
+                    <Field label="Date"><input value={c.date} onChange={e => setCert(c.id, 'date', e.target.value)} placeholder="Jan 2024" /></Field>
+                  </div>
+                </div>
+              ))}
+              <button className="btn-add" onClick={addCert}>＋ Add certification</button>
+            </SectionCard>
+
+            {/* Languages */}
+            <SectionCard icon="🌐" title="Languages">
+              <Field label="Languages">
+                {cv.languages.map(l => (
+                  <div key={l.id} className="skill-row">
+                    <select
+                      value={l.name}
+                      onChange={e => setLang(l.id, 'name', e.target.value)}
+                      style={{ flex: '0 0 180px' }}
+                    >
+                      {LANGUAGES.map(language => (
+                        <option key={language} value={language}>
+                          {language || 'Select language'}
+                        </option>
+                      ))}
+                    </select>
+                    <select
+                      value={l.level}
+                      onChange={e => setLang(l.id, 'level', e.target.value)}
+                    >
+                      {LANGUAGE_LEVELS.map(level => (
+                        <option key={level} value={level}>
+                          {level || 'Select level'}
+                        </option>
+                      ))}
+                    </select>
+                    <button
+                      className="btn-icon"
+                      onClick={() => removeLang(l.id)}
+                    >
+                      ✕
+                    </button>
+                  </div>
+                ))}
+
+                <button
+                  className="btn-add"
+                  onClick={addLang}
+                >
+                  ＋ Add language
+                </button>
+              </Field>
+            </SectionCard>
+
+            {/* Soft Skills */}
+            <SectionCard icon="🤝" title="Soft Skills">
+              <Field label="Soft Skills">
+                {cv.softSkills.map((s, i) => (
+                  <div key={i} className="skill-row">
+                    <input
+                      value={s}
+                      onChange={e => setSoftSkill(i, e.target.value)}
+                      placeholder="e.g. Leadership"
+                    />
+                    <button
+                      className="btn-icon"
+                      onClick={() => removeSoftSkill(i)}
+                    >
+                      ✕
+                    </button>
+                  </div>
+                ))}
+                <button className="btn-add" onClick={addSoftSkill}>
+                  ＋ Add soft skill
+                </button>
+              </Field>
+            </SectionCard>
+
+            <div style={{height: 20}} />
+          </div>
+        </div>
+
+        {/* PREVIEW */}
+        {activeTab === 'preview' && (
+          <div className="preview-panel">
+            <div className="preview-toolbar">
+              <span>ATS-ready preview · Print or Ctrl+P to save as PDF</span>
+              <button className="btn btn-teal btn-sm" onClick={() => window.print()}>🖨 Print / Save PDF</button>
+            </div>
+            <div className="preview-scroll">
+              <CVPreview cv={cv} />
+            </div>
+          </div>
+        )}
+
+        {/* JSON VIEW */}
+        {activeTab === 'json' && (
+          <div className="json-panel">
+            <div className="json-toolbar">
+              <span>{ } Live JSON — edit in the Editor panel, export/import with the toolbar buttons</span>
+              <button className="btn btn-ghost btn-sm" onClick={exportJSON}>📥 Export</button>
+              <button className="btn btn-ghost btn-sm" onClick={openImport}>📤 Import</button>
+            </div>
+            <div className="json-scroll">
+              <pre dangerouslySetInnerHTML={{ __html: syntaxHighlight(jsonStr) }} />
+            </div>
+          </div>
+        )}
+
+        {/* SPLIT: Editor + Preview */}
+        {activeTab === 'editor' && (
+          <div className="preview-panel">
+            <div className="preview-toolbar">
+              <span>Live preview</span>
+              <button className="btn btn-teal btn-sm" onClick={printPDF}>🖨 Export PDF</button>
+            </div>
+            <div className="preview-scroll">
+              <CVPreview cv={cv} />
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* IMPORT MODAL */}
+      {showImportModal && (
+        <div className="modal-overlay" onClick={e => e.target === e.currentTarget && setShowImportModal(false)}>
+          <div className="modal">
+            <h3>📤 Import CV from JSON</h3>
+            <p style={{fontSize:'13px', color:'var(--muted)', marginBottom:'12px'}}>Paste a previously exported JSON below. This will replace your current data.</p>
+            <textarea
+              value={importText}
+              onChange={e => { setImportText(e.target.value); setImportError(''); }}
+              placeholder={'{\n  "personal": { "name": "..." },\n  ...\n}'}
+            />
+            {importError && <div className="modal-error">⚠️ {importError}</div>}
+            <div className="modal-actions">
+              <button className="btn btn-ghost" style={{color:'var(--text)', border:'1px solid var(--border)'}} onClick={() => setShowImportModal(false)}>Cancel</button>
+              <button className="btn btn-teal" onClick={doImport}>Import</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* TOAST */}
+      {toast && <div className="toast"><span>{toast.icon}</span>{toast.msg}</div>}
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

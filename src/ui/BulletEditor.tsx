@@ -1,13 +1,17 @@
+import type { TFunction } from 'i18next';
+
 import '../styles/ui.css';
 
 interface Props {
   bullets: string[];
   onChange: (bullets: string[]) => void;
+  t: TFunction;
 }
 
 export default function BulletEditor({
   bullets,
   onChange,
+  t,
 }: Props) {
 
   const update = (
@@ -47,7 +51,7 @@ export default function BulletEditor({
                 e.target.value
               )
             }
-            placeholder="Describe an achievement or responsibility..."
+            placeholder={t('ui.bullets.placeholder')}
           />
           <button
             type="button"

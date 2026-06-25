@@ -8,7 +8,7 @@
 
 .topbar-spacer { flex:1; }
 
-.topbar-actions { display:flex;align-items:center;gap:12px;flex-wrap:wrap; }
+.topbar-actions { display:flex;align-items:center;gap:12px;flex-wrap:nowrap; }
 
 .tab-btn {
     background: transparent;
@@ -30,6 +30,34 @@
 
 .tab-btn.active { background:rgba(14,165,233,0.12)
 ;color:#0ea5e9; }
+
+.lang-select {
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 8px;
+  background: rgba(255,255,255,.07);
+  color: #cbd5e1;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  outline: none;
+  transition: .15s;
+  width: auto;
+  max-width: 140px;
+  align-self: center;
+  flex-shrink: 0;
+}
+
+.lang-select:hover {
+  background: rgba(255,255,255,.13);
+  color: #fff;
+}
+
+.lang-select option {
+  background: #0f1f3d;
+  color: #fff;
+}
 
 @media (max-width:1200px) { .topbar { height:auto;padding:16px;flex-wrap:wrap;align-items:flex-start; } .topbar-spacer { display:none; } .topbar-actions { width:100%; } }
 

@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import '../styles/import-modal.css';
 
 interface Props {
@@ -11,9 +13,10 @@ export default function ImportModal({
   onClose,
 }: Props) {
 
-  const [text,setText] = useState('');
+  const { t } = useTranslation();
 
-  const [error,setError] = useState('');
+  const [text, setText] = useState('');
+  const [error, setError] = useState('');
 
   useEffect(() => {
 
@@ -22,9 +25,7 @@ export default function ImportModal({
     ) => {
 
       if (e.key === 'Escape') {
-
         onClose();
-
       }
 
     };
@@ -43,14 +44,14 @@ export default function ImportModal({
 
     };
 
-  },[onClose]);
+  }, [onClose]);
 
   const handleImport = () => {
 
     if (!text.trim()) {
 
       setError(
-        'JSON cannot be empty.'
+        t('modal.import.errorEmpty')
       );
 
       return;
@@ -72,9 +73,7 @@ export default function ImportModal({
   };
 
   const handleOverlayClick = (
-
     e: React.MouseEvent<HTMLDivElement>
-
   ) => {
 
     if (
@@ -90,15 +89,10 @@ export default function ImportModal({
   return (
 
     <div
-
       className="modal-overlay"
-
       onClick={handleOverlayClick}
-
       role="dialog"
-
       aria-modal="true"
-
     >
 
       <div className="modal">
@@ -106,49 +100,32 @@ export default function ImportModal({
         <div className="modal-header">
 
           <h3>
-
-            📤 Import CV from JSON
-
+            {t('modal.import.title')}
           </h3>
 
         </div>
 
         <div className="modal-description">
 
-          Paste a previously exported JSON below.
-
-          This will replace your current data.
+          {t('modal.import.description')}
 
         </div>
 
         <textarea
-
           className="modal-textarea"
-
           value={text}
-
           onChange={e => {
 
             setText(
-
               e.target.value
-
             );
 
             if (error) {
-
               setError('');
-
             }
 
           }}
-
-          placeholder={`{
-  "personal": {
-    "name":"..."
-  }
-}`}
-
+          placeholder={t('modal.import.placeholder')}
         />
 
         {error && (
@@ -164,32 +141,23 @@ export default function ImportModal({
         <div className="modal-actions">
 
           <button
-
             type="button"
-
             className="btn btn-ghost"
-
             onClick={onClose}
-
           >
 
-            Cancel
+            {t('modal.import.cancel')}
 
           </button>
 
           <button
-
             type="button"
-
             className="btn btn-teal"
-
             onClick={handleImport}
-
             disabled={!text.trim()}
-
           >
 
-            Import
+            {t('modal.import.import')}
 
           </button>
 
@@ -200,4 +168,5 @@ export default function ImportModal({
     </div>
 
   );
+
 }

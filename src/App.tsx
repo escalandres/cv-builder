@@ -1,5 +1,5 @@
 import { useState } from 'react';
-
+import { useTranslation } from 'react-i18next';
 import { useCv } from './hooks/useCv';
 import { useToast } from './hooks/useToast';
 
@@ -18,7 +18,7 @@ import './App.css';
 type Tab = 'editor' | 'preview' | 'json';
 
 export default function App() {
-
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<Tab>('editor');
 
   const [showImportModal, setShowImportModal] = useState(false);
@@ -66,7 +66,7 @@ export default function App() {
 
   const handleExportJSON = () => {
     exportJSON();
-    showToast('download', 'JSON exported successfully');
+    showToast('download', t('toast.jsonExported'));
   };
 
   const handleImportJSON = (text: string): string | null => {
@@ -74,7 +74,7 @@ export default function App() {
     const err = importJSON(text);
 
     if (!err) {
-      showToast('upload', 'CV imported successfully');
+      showToast('upload', t('toast.cvImported'));
     }
 
     return err;
@@ -85,8 +85,8 @@ export default function App() {
 
     importFile(
       file,
-      () => showToast('upload', 'File imported successfully'),
-      msg => showToast('error', `Error: ${msg}`)
+      () => showToast('upload', t('toast.fileImported')),
+      msg => showToast('error', t('toast.error', { message: msg }))
     );
 
   };
@@ -97,7 +97,7 @@ export default function App() {
 
     showToast(
       'sample',
-      'Sample CV loaded'
+      t('toast.sampleLoaded')
     );
 
   };
@@ -105,7 +105,7 @@ export default function App() {
   const handleClear = () => {
 
     const confirmed = window.confirm(
-      'Are you sure you want to clear all CV data?'
+      t('dialogs.clearCvConfirm')
     );
 
     if (!confirmed) return;
@@ -118,7 +118,7 @@ export default function App() {
 
     showToast(
       'delete',
-      'CV cleared successfully'
+      t('toast.cvCleared')
     );
 
   };
@@ -189,7 +189,7 @@ export default function App() {
             <PreviewPanel
               cv={cv}
               onExportPDF={handleExportPDF}
-              toolbarLabel="Live preview"
+              toolbarLabel={t('preview.label')}
             />
           </>
         )}
@@ -198,7 +198,7 @@ export default function App() {
           <PreviewPanel
             cv={cv}
             onExportPDF={handleExportPDF}
-            toolbarLabel="ATS-ready preview · Print or Ctrl+P to save as PDF"
+            toolbarLabel={t('preview.atsPreview')}
             fullWidth
           />
         )}
