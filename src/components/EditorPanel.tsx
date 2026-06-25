@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
-import type { CV } from '../types/cv.types';
+import type { CV, CVTemplate } from '../types/cv.types';
 import { CV_TEMPLATES, LANGUAGES, LANGUAGE_LEVELS } from '../data/constants';
 import Field        from '../ui/Field';
 import SectionCard  from '../ui/SectionCard';
@@ -9,7 +9,7 @@ import '../styles/editor.css';
 
 interface Props {
   cv:               CV;
-  onTemplate:       (val: string) => void;
+  onTemplate:       (val: CVTemplate) => void;
   onPersonal:       (field: string, val: string) => void;
   onSummary:        (val: string) => void;
   onAddSkill:       () => void;
@@ -53,7 +53,7 @@ export default function EditorPanel({ cv, visible, width, ...on }: Props) {
         {/* CV Format */}
         <SectionCard icon="📄" title={t('editor.sections.format')}>
           <Field label={t('editor.fields.template')}>
-            <select value={cv.template} onChange={e => on.onTemplate(e.target.value)}>
+            <select value={cv.template} onChange={e => on.onTemplate(e.target.value as CVTemplate )}>
               {CV_TEMPLATES.map(t => (
                 <option key={t.value} value={t.value}>{t.label}</option>
               ))}

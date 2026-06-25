@@ -1,5 +1,8 @@
 import { useState } from 'react';
-import { type CV, EMPTY_CV, SAMPLE_CV } from '../data/cv.model';
+
+import type { CV } from '../types/cv.types';
+import { EMPTY_CV, SAMPLE_CV } from '../data/cv.model';
+import type { CVTemplate } from '../types/cv.types';
 
 let nextId = 100;
 const uid = () => ++nextId;
@@ -16,7 +19,7 @@ export function useCv() {
     setCV(c => ({ ...c, summary: val }));
 
   // ── Template ────────────────────────────────────────────────
-  const setTemplate = (val: string) =>
+  const setTemplate = (val: CVTemplate) =>
     setCV(c => ({ ...c, template: val }));
 
   // ── Skills ──────────────────────────────────────────────────
