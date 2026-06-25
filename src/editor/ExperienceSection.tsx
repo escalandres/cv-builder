@@ -1,6 +1,6 @@
 import type { Job } from '../types/cv.types';
 import type { SectionVariant } from './HeaderSection';
-
+import { useTranslation } from 'react-i18next';
 interface Props {
   experience: Job[];
   variant?: SectionVariant;
@@ -8,10 +8,12 @@ interface Props {
 
 export default function ExperienceSection({ experience, variant = 'standard' }: Props) {
 
+  const { t } = useTranslation();
+
   if (variant === 'harvard') {
     return (
       <div className="harvardcv-section">
-        <div className="harvardcv-section-title">Work Experience</div>
+        <div className="harvardcv-section-title">{t('cv.sections.experience')}</div>
 
         {experience.map(job => {
           const bullets = job.bullets.filter(Boolean);
@@ -43,7 +45,7 @@ export default function ExperienceSection({ experience, variant = 'standard' }: 
   if (variant === 'europass') {
     return (
       <div className="europass-section">
-        <h2>Work Experience</h2>
+        <h2>{t('cv.sections.experience')}</h2>
 
         {experience.map(job => {
           const bullets = job.bullets.filter(Boolean);
@@ -72,7 +74,7 @@ export default function ExperienceSection({ experience, variant = 'standard' }: 
 
   return (
     <div className="cv-section">
-      <div className="cv-section-title">Work Experience</div>
+      <div className="cv-section-title">{t('cv.sections.experience')}</div>
 
       {experience.map(job => {
         const bullets = job.bullets.filter(Boolean);

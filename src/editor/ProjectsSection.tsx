@@ -1,13 +1,14 @@
 import type { Project } from '../types/cv.types';
-
+import { useTranslation } from 'react-i18next';
 interface Props {
   projects: Project[];
 }
 
 export default function ProjectsSection({ projects }: Props) {
+  const { t } = useTranslation();
   return (
     <div className="cv-section">
-      <div className="cv-section-title">Projects</div>
+      <div className="cv-section-title">{t('cv.sections.projects')}</div>
 
       {projects.map(project => {
         const bullets = project.bullets.filter(Boolean);
